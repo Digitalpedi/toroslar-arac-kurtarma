@@ -1,4 +1,8 @@
 /*
+  # DEMO YAYIN — müşteri onayı öncesi arama motorlarına kapalı.
+  # Gerçek domain bağlanınca bu satır SİLİNİR ve site.ts icindeki
+  # `indexable: true` yapılır.
+  X-Robots-Tag: noindex, nofollow
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   X-Frame-Options: SAMEORIGIN

@@ -15,7 +15,8 @@
     "assets": "node scripts/generate-assets.mjs",
     "qa": "node scripts/qa.mjs",
     "media:fetch": "node scripts/fetch-media.mjs",
-    "shots": "node scripts/screenshots.mjs"
+    "shots": "node scripts/screenshots.mjs",
+    "deploy": "npm run build && wrangler pages deploy dist --project-name=toroslar-arac-kurtarma --branch=main"
   },
   "dependencies": {
     "@astrojs/check": "^0.9.4",

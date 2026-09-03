@@ -40,6 +40,9 @@ const {
   headerOnDark = false,
 } = Astro.props;
 
+/* Demo yayında tüm sayfalar noindex — site.indexable bayrağı tek anahtardır */
+const blockIndex = noindex || !site.indexable;
+
 const canonical = new URL(path, site.url).href;
 const ogUrl = new URL(ogImage, site.url).href;
 
@@ -60,9 +63,9 @@ const graph = buildGraph(
     <title>{title}</title>
     <meta name="description" content={description} />
     <link rel="canonical" href={canonical} />
-    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {blockIndex && <meta name="robots" content="noindex, nofollow" />}
     {
-      !noindex && (
+      !blockIndex && (
         <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
       )
     }

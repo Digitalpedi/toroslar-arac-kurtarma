@@ -32,13 +32,13 @@ Bu blok müşteri/kullanıcı onayıyla kilitlendi. Değişiklik ancak açık ta
 | Alan | Karar |
 |---|---|
 | Stack | Astro 5 static output, Tailwind v4 CSS-first `@theme`, TypeScript strict |
-| Hareket | GSAP + ScrollTrigger + Lenis, `src/lib/motion.ts` data-attribute API |
+| Hareket | GSAP + ScrollTrigger, `src/lib/motion.ts` data-attribute API. Reveal'lar IntersectionObserver ile; **Lenis kullanılmıyor** (programatik scroll'u ele geçiriyordu) |
 | İçerik | Astro Content Collections (zod şemalı md) — `hizmetler`, `bolgeler`, `rehber` |
 | Tek kaynak | `src/data/site.ts` — NAP, nav, tel, whatsappUrl, hizmet bölgeleri |
 | Fontlar | `@fontsource-variable/bricolage-grotesque` (display) · `@fontsource-variable/ibm-plex-sans` (gövde) · `@fontsource/ibm-plex-mono` (teknik etiket) — self-host, CDN yok |
 | Görseller | Pexels (ücretsiz lisans) → `scripts/process-media.mjs` → AVIF + WebP `<picture>`, width/height ile CLS önleme |
 | Canonical | `https://toroslar.digitalpedi.com` — gerçek domain gelince `astro.config.mjs` + `src/data/site.ts` içinde tek satır değişir |
-| Deploy | Cloudflare Pages, git-bağlı. `*.pages.dev` Türkiye'de engelli → custom domain zorunlu |
+| Deploy | Cloudflare Pages **direct upload** (`npm run deploy`) — diğer Digitalpedi projeleriyle aynı. `*.pages.dev` Türkiye'de engelli → custom domain zorunlu |
 | Repo | GitHub `Digitalpedi/toroslar-arac-kurtarma` (public) |
 | Form | Yok — lead kanalı yalnız telefon + WhatsApp. (Sonradan Formspree eklenebilir.) |
 
@@ -64,54 +64,55 @@ Bu blok müşteri/kullanıcı onayıyla kilitlendi. Değişiklik ancak açık ta
 - [x] `docs/` içerik ve tasarım planları
 - [x] ROADMAP
 
-### Faz 1 — İskelet ve tasarım sistemi
-- [ ] Astro + Tailwind v4 + TS strict kurulumu
-- [ ] `src/styles/tokens.css` — renk, tipografi ölçeği, boşluk, gölge, easing, z-katman
-- [ ] `src/styles/global.css` — taban, buton/kart/prose desenleri, hazard şerit yardımcıları
-- [ ] `src/data/site.ts` — tek kaynak
-- [ ] `src/lib/motion.ts` — hareket motoru (reveal, depth, word-light, marquee, counter, magnetic, pinned sekans)
-- [ ] `src/lib/schema.ts` — JSON-LD üreticileri (yalnız doğrulanmış veri)
-- [ ] `src/layouts/Base.astro` — canonical, OG, Twitter, JSON-LD graf, skip link
+### Faz 1 — İskelet ve tasarım sistemi ✅
+- [x] Astro + Tailwind v4 + TS strict kurulumu
+- [x] `src/styles/tokens.css` — renk, tipografi ölçeği, boşluk, gölge, easing, z-katman
+- [x] `src/styles/global.css` — taban, buton/kart/prose desenleri, hazard şerit yardımcıları
+- [x] `src/data/site.ts` — tek kaynak
+- [x] `src/lib/motion.ts` — hareket motoru (reveal, depth, word-light, marquee, counter, magnetic, sticky sekans)
+- [x] `src/lib/schema.ts` — JSON-LD üreticileri (yalnız doğrulanmış veri)
+- [x] `src/layouts/Base.astro` — canonical, OG, Twitter, JSON-LD graf, skip link
 
-### Faz 2 — Çekirdek bileşenler
-- [ ] `Header.astro` (yapışkan, koyu/açık varyant, mobil menü, focus trap)
-- [ ] `Footer.astro` (NAP, sütunlar, Digitalpedi imzası)
-- [ ] `MobileContactBar.astro` (≤980px sticky Ara + WhatsApp, safe-area)
-- [ ] `Hero.astro`, `PageHero.astro`, `SectionHead.astro`, `CtaBand.astro`
-- [ ] `Figure.astro` (AVIF/WebP `<picture>`, CLS güvenli)
-- [ ] `Faq.astro`, `Marquee.astro`, `StepFlow.astro`, `ServiceCard.astro`, `AreaCard.astro`
+### Faz 2 — Çekirdek bileşenler ✅
+- [x] `Header.astro` (yapışkan, koyu/açık varyant, mobil menü, focus trap)
+- [x] `Footer.astro` (NAP, sütunlar, Digitalpedi imzası)
+- [x] `MobileContactBar.astro` (≤980px sticky Ara + WhatsApp, safe-area)
+- [x] `Hero.astro`, `PageHero.astro`, `SectionHead.astro`, `CtaBand.astro`
+- [x] `Figure.astro` (AVIF/WebP `<picture>`, CLS güvenli)
+- [x] `Faq.astro`, `Marquee.astro`, `Sequence.astro`, `ServiceCard.astro`, `AreaCard.astro`, `Icon.astro`, `Brand.astro`, `Breadcrumbs.astro`
 
-### Faz 3 — İçerik altyapısı ve sayfalar
-- [ ] Content Collections şeması (`hizmetler`, `bolgeler`, `rehber`)
-- [ ] 6 hizmet sayfası + hub
-- [ ] 4 bölge sayfası + hub
-- [ ] Anasayfa, Kurumsal, Süreç, S.S.S., İletişim
-- [ ] Rehber hub + 8 makale
-- [ ] 404, KVKK, Gizlilik
+### Faz 3 — İçerik altyapısı ve sayfalar ✅
+- [x] Content Collections şeması (`hizmetler`, `bolgeler`, `rehber`)
+- [x] 6 hizmet sayfası + hub
+- [x] 4 bölge sayfası + hub
+- [x] Anasayfa, Kurumsal, Süreç, S.S.S., İletişim
+- [x] Rehber hub + 8 makale
+- [x] 404, KVKK, Gizlilik
 
-### Faz 4 — Görsel pipeline
-- [ ] Pexels'ten lisanslı görsel toplama (`media-src/`)
-- [ ] `scripts/process-media.mjs` — sharp ile AVIF + WebP + boyut varyantları
-- [ ] OG görseli üretimi
-- [ ] favicon / apple-touch-icon / webmanifest
+### Faz 4 — Görsel pipeline ✅
+- [x] Pexels'ten lisanslı görsel toplama (`media-src/`)
+- [x] `scripts/process-media.mjs` — sharp ile AVIF + WebP + boyut varyantları
+- [x] OG görseli üretimi
+- [x] favicon / apple-touch-icon / webmanifest
 
-### Faz 5 — SEO paketi
-- [ ] JSON-LD graf: `AutomotiveBusiness` + `WebSite` + `BreadcrumbList` + `FAQPage` + `Service`
-- [ ] `@astrojs/sitemap` (404 filtreli) + `robots.txt` + `llms.txt`
-- [ ] Sayfa başına benzersiz title/description, H1 hiyerarşisi
-- [ ] İç bağlantı ağı: hizmet ↔ bölge ↔ rehber çapraz bağları
-- [ ] `public/_headers` — cache + güvenlik başlıkları
+### Faz 5 — SEO paketi ✅
+- [x] JSON-LD graf: `AutomotiveBusiness` + `WebSite` + `BreadcrumbList` + `FAQPage` + `Service`
+- [x] `@astrojs/sitemap` (404 filtreli) + `robots.txt` + `llms.txt`
+- [x] Sayfa başına benzersiz title/description, H1 hiyerarşisi
+- [x] İç bağlantı ağı: hizmet ↔ bölge ↔ rehber çapraz bağları
+- [x] `public/_headers` — cache + güvenlik başlıkları
 
-### Faz 6 — Doğrulama
-- [ ] `npm run build` temiz (astro check dahil)
-- [ ] Tarayıcı testi: konsol hatası yok, 375 / 768 / 1024 / 1440 responsive
-- [ ] Erişilebilirlik: kontrast, focus, klavye, `prefers-reduced-motion`
-- [ ] Bağlantı denetimi (kırık iç link yok)
+### Faz 6 — Doğrulama ✅
+- [x] `npm run build` temiz (astro check dahil)
+- [x] Tarayıcı testi: konsol hatası yok, 375 / 768 / 1024 / 1440 responsive
+- [x] Erişilebilirlik: kontrast, focus, klavye, `prefers-reduced-motion`
+- [x] Bağlantı denetimi (kırık iç link yok)
 
 ### Faz 7 — Yayın
-- [ ] GitHub repo + push
-- [ ] Cloudflare Pages git-bağlı deploy
-- [ ] `toroslar.digitalpedi.com` custom domain
+- [x] GitHub repo + push
+- [x] Cloudflare Pages projesi + direct-upload deploy (`npm run deploy`)
+- [x] `toroslar.digitalpedi.com` custom domain Pages projesine eklendi
+- [ ] **DNS CNAME kaydı** — `toroslar` → `toroslar-arac-kurtarma.pages.dev` (wrangler token'ında `dns_records:edit` yok, panelden eklenecek)
 - [ ] Gerçek domain bağlanınca canonical güncelle — **müşteri domaini beklemede**
 
 ---
@@ -119,10 +120,49 @@ Bu blok müşteri/kullanıcı onayıyla kilitlendi. Değişiklik ancak açık ta
 ## Devir notları
 
 ### 2026-09-03 — Faz 0-7 (tek session)
-**Yapıldı:** Proje sıfırdan kuruldu ve yayına alındı. 27 sayfa, 6 hizmet + 4 bölge + 8 rehber makalesi.
-Tasarım sistemi "Asfalt & Amber" tokenları, hazard şerit imza motifi, GSAP hareket motoru.
-**Doğrulama:** `npm run build` temiz; tarayıcıda 4 kırılma noktası ve konsol kontrol edildi.
-**Yarım kalan:** Gerçek müşteri domaini henüz belli değil — canonical `toroslar.digitalpedi.com`.
-E-posta adresi yok; iletişim yalnız tel + WhatsApp.
-**Sıradaki session'ın ilk işi:** Müşteri domaini gelirse `astro.config.mjs` + `src/data/site.ts`
-içindeki `url` değerini değiştir, CF Pages'te custom domain ekle, sitemap'i Search Console'a gönder.
+
+**Yapıldı**
+Proje sıfırdan kuruldu. 30 sayfa: 6 hizmet, 4 bölge, 8 rehber makalesi,
+kurumsal, süreç, S.S.S., iletişim, KVKK, gizlilik, 404.
+Tasarım sistemi "Asfalt & Amber" (tokens.css), ikaz şeridi imza motifi,
+GSAP hareket motoru, 22 Pexels görseli AVIF/WebP/JPEG boru hattından geçti,
+JSON-LD grafı + sitemap + robots + llms.txt + _headers.
+GitHub reposu açıldı ve pushlandı. Cloudflare Pages projesi kuruldu, ilk
+deploy yapıldı, custom domain projeye eklendi.
+
+**Yol boyunca değişen üç teknik karar (gerekçeleriyle)**
+1. **Lenis kaldırıldı.** Her karede `scrollTop`'u kendi hedefine geri yazıyor;
+   `scrollIntoView`, geri/ileri konum geri yükleme ve programatik scroll
+   bozuluyordu. Sinematik his reveal + parallax katmanından geliyor.
+2. **Reveal'lar ScrollTrigger yerine IntersectionObserver.** Sticky bölümler
+   varken ScrollTrigger'ın başlangıç noktaları bayatlayıp içeriği görünmez
+   bırakıyordu. Parallax ve scrub efektleri ScrollTrigger'da kaldı.
+3. **Pin yerine sticky.** `ScrollTrigger.pin` pin-spacer üretip düzeni
+   kaydırıyordu; `position: sticky` aynı etkiyi bedelsiz veriyor.
+
+**Doğrulama**
+`npm run build` temiz (astro check dahil).
+`npm run qa` üretim derlemesine karşı 4 kırılma noktasında (375/768/1024/1440)
+sorunsuz: konsol hatası yok, yatay taşma yok, görünmez kalan reveal yok,
+kırık iç link yok, title/description benzersiz, tek h1, başlık hiyerarşisi
+düzgün, tüm görsellerde alt, tüm sayfalarda canonical, JSON-LD ayrıştırılabilir.
+`*.pages.dev` Türkiye'den engelli olduğu için canlı doğrulama custom domain
+aktifleşince tekrarlanmalı.
+
+**Yarım kalan / kilitli**
+- **DNS kaydı** — wrangler OAuth token'ında `dns_records:edit` izni yok.
+  Cloudflare panelinden `digitalpedi.com` → DNS → CNAME `toroslar` →
+  `toroslar-arac-kurtarma.pages.dev` (Proxied) eklenmeli.
+- **Gerçek müşteri domaini** belli değil; canonical `toroslar.digitalpedi.com`.
+- **Site şu anda noindex** (demo modu). `site.ts` → `indexable: true` ve
+  `_headers` → `X-Robots-Tag` satırının silinmesiyle açılır.
+- **E-posta adresi yok**; iletişim yalnız telefon + WhatsApp.
+- **Google Business Profile yok.** Harita paketinde görünmek için şart —
+  müşteriye bildirilmeli. Açılınca `schema.ts` içine `sameAs` ve `hasMap`
+  eklenebilir.
+
+**Sıradaki session'ın ilk işi**
+1. DNS kaydını ekle, `npm run qa https://toroslar.digitalpedi.com` çalıştır.
+2. Müşteri onayı gelirse `indexable: true` yap, `X-Robots-Tag` satırını sil,
+   `npm run deploy`.
+3. Gerçek domain gelirse `docs/DEPLOY.md` içindeki 4 adımlık listeyi uygula.

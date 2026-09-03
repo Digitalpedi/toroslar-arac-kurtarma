@@ -29,6 +29,21 @@ export const site = {
   url: 'https://toroslar.digitalpedi.com',
 
   /**
+   * ARAMA MOTORU İNDEKSLEMESİ
+   *
+   * `false` olduğu sürece tüm sayfalar `noindex` yayımlanır ve
+   * `public/_headers` içindeki `X-Robots-Tag` ile pekiştirilir.
+   *
+   * Bu, müşteri onayı öncesi demo adresinin (toroslar.digitalpedi.com)
+   * aranabilir hâle gelmesini engeller. Gerçek domain bağlanıp müşteri
+   * onayı alındığında:
+   *   1. burayı `true` yap
+   *   2. `public/_headers` içindeki `X-Robots-Tag: noindex` satırını sil
+   *   3. `astro.config.mjs` ve yukarıdaki `url` değerini yeni domaine çevir
+   */
+  indexable: false,
+
+  /**
    * Fiziksel adres YOK — mobil hizmet işletmesi.
    * Şemada `areaServed` kullanılır, `address` düğümü hiç üretilmez.
    */

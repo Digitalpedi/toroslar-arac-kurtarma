@@ -1,0 +1,115 @@
+---
+import Base from '~/layouts/Base.astro';
+import PageHero from '~/components/PageHero.astro';
+import { site } from '~/data/site';
+
+const path = '/kvkk-aydinlatma-metni/';
+const breadcrumb = [{ name: 'KVKK Aydınlatma Metni', href: path }];
+---
+
+<Base
+  title="KVKK Aydınlatma Metni | Toroslar Araç Kurtarma"
+  description="6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamında Toroslar Araç Kurtarma tarafından işlenen kişisel veriler, işleme amaçları ve haklarınız."
+  path={path}
+  breadcrumb={breadcrumb}
+  headerOnDark
+>
+  <PageHero
+    kicker="Yasal"
+    title="KVKK Aydınlatma Metni"
+    lead="6698 sayılı Kişisel Verilerin Korunması Kanunu kapsamında hazırlanmıştır."
+    breadcrumb={breadcrumb}
+    showCta={false}
+  />
+
+  <section class="section">
+    <div class="container-site">
+      <div class="prose">
+        <h2>Veri sorumlusu</h2>
+        <p>
+          Bu aydınlatma metni, 6698 sayılı Kişisel Verilerin Korunması Kanunu’nun (“KVKK”)
+          10. maddesi uyarınca, veri sorumlusu sıfatıyla <strong>{site.name}</strong>
+          tarafından hazırlanmıştır.
+        </p>
+        <p>
+          İletişim: <a href={site.phone.href}>{site.phone.display}</a>
+        </p>
+
+        <h2>İşlenen kişisel veriler</h2>
+        <p>
+          Bu internet sitesinde iletişim formu, üyelik veya sipariş sistemi
+          <strong>bulunmamaktadır</strong>. Site üzerinden doğrudan kişisel veri toplanmaz.
+        </p>
+        <p>
+          Kişisel verileriniz yalnızca siz telefon veya WhatsApp yoluyla bize ulaştığınızda,
+          hizmetin verilebilmesi için gerekli olduğu ölçüde işlenir:
+        </p>
+        <ul>
+          <li><strong>Kimlik bilgisi:</strong> ad, soyad (yalnızca beyan ettiğiniz kadarıyla)</li>
+          <li><strong>İletişim bilgisi:</strong> telefon numarası</li>
+          <li><strong>Konum bilgisi:</strong> aracın bulunduğu ve teslim edileceği adres</li>
+          <li><strong>Araç bilgisi:</strong> plaka, marka, model ve aracın durumuna ilişkin beyanınız</li>
+        </ul>
+
+        <h2>İşleme amaçları</h2>
+        <ul>
+          <li>Talep ettiğiniz çekici ve araç kurtarma hizmetinin planlanması ve yürütülmesi</li>
+          <li>Aracın alınacağı ve teslim edileceği noktanın belirlenmesi</li>
+          <li>Hizmet sırasında ve sonrasında sizinle iletişim kurulması</li>
+          <li>Yasal yükümlülüklerin yerine getirilmesi</li>
+        </ul>
+
+        <h2>Hukuki sebep</h2>
+        <p>
+          Kişisel verileriniz, KVKK’nın 5. maddesinde belirtilen “bir sözleşmenin kurulması
+          veya ifasıyla doğrudan doğruya ilgili olması”, “veri sorumlusunun hukuki
+          yükümlülüğünü yerine getirebilmesi için zorunlu olması” ve “ilgili kişinin temel hak
+          ve özgürlüklerine zarar vermemek kaydıyla veri sorumlusunun meşru menfaatleri için
+          veri işlenmesinin zorunlu olması” hukuki sebeplerine dayanılarak işlenir.
+        </p>
+
+        <h2>Aktarım</h2>
+        <p>
+          Kişisel verileriniz, yalnızca hizmetin gerektirdiği ölçüde ve yasal yükümlülükler
+          çerçevesinde üçüncü kişilerle paylaşılabilir. Ticari amaçla üçüncü taraflara
+          satılmaz veya pazarlama amacıyla aktarılmaz.
+        </p>
+        <p>
+          WhatsApp üzerinden ilettiğiniz mesajlar, ilgili platformun kendi gizlilik
+          politikasına ve sunucu altyapısına tabidir.
+        </p>
+
+        <h2>Saklama süresi</h2>
+        <p>
+          Kişisel verileriniz, işlendikleri amaç için gerekli olan süre boyunca ve ilgili
+          mevzuatta öngörülen zamanaşımı süreleri boyunca saklanır; bu sürelerin sonunda
+          silinir, yok edilir veya anonim hâle getirilir.
+        </p>
+
+        <h2>Haklarınız</h2>
+        <p>KVKK’nın 11. maddesi uyarınca:</p>
+        <ul>
+          <li>Kişisel verinizin işlenip işlenmediğini öğrenme</li>
+          <li>İşlenmişse buna ilişkin bilgi talep etme</li>
+          <li>İşlenme amacını ve amacına uygun kullanılıp kullanılmadığını öğrenme</li>
+          <li>Yurt içinde veya yurt dışında aktarıldığı üçüncü kişileri bilme</li>
+          <li>Eksik veya yanlış işlenmişse düzeltilmesini isteme</li>
+          <li>Kanunda öngörülen şartlar çerçevesinde silinmesini veya yok edilmesini isteme</li>
+          <li>Düzeltme, silme ve yok etme işlemlerinin aktarıldığı üçüncü kişilere bildirilmesini isteme</li>
+          <li>İşlenen verilerin münhasıran otomatik sistemlerle analiz edilmesi suretiyle aleyhinize bir sonucun ortaya çıkmasına itiraz etme</li>
+          <li>Kanuna aykırı işleme sebebiyle zarara uğramanız hâlinde zararın giderilmesini talep etme</li>
+        </ul>
+        <p>
+          Bu haklarınıza ilişkin taleplerinizi <a href={site.phone.href}>{site.phone.display}</a>
+          numarasından bize iletebilirsiniz.
+        </p>
+
+        <h2>Güncelleme</h2>
+        <p>
+          Bu aydınlatma metni gerektiğinde güncellenebilir. Güncel metin her zaman bu sayfada
+          yayımlanır.
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>

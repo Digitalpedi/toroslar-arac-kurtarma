@@ -1,0 +1,145 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '~/layouts/Base.astro';
+import PageHero from '~/components/PageHero.astro';
+import AreaCard from '~/components/AreaCard.astro';
+import Marquee from '~/components/Marquee.astro';
+import CtaBand from '~/components/CtaBand.astro';
+import { localSpots } from '~/data/site';
+import { itemListNode } from '~/lib/schema';
+
+const items = (await getCollection('bolgeler')).sort((a, b) => a.data.order - b.data.order);
+
+const path = '/bolgeler/';
+const breadcrumb = [{ name: 'Bölgeler', href: path }];
+
+const schema = [
+  itemListNode({
+    path,
+    items: items.map((i) => ({ name: i.data.title, href: `/bolgeler/${i.id}/` })),
+  }),
+];
+---
+
+<Base
+  title="Mersin Çekici Bölgeleri | Toroslar, Yenişehir, Mezitli, Akdeniz"
+  description="Mersin şehir içinde çekici hizmeti verdiğimiz ilçeler: Toroslar, Yenişehir, Mezitli ve Akdeniz. Her ilçenin kendine özgü yol dokusu ve sık gelen çağrıları."
+  path={path}
+  breadcrumb={breadcrumb}
+  schema={schema}
+  headerOnDark
+>
+  <PageHero
+    kicker="Nerede çalışıyoruz"
+    title="Mersin şehir içi — dört merkez ilçe"
+    lead="Şehirlerarası iş almıyoruz. Bunun bir sebebi var: dar bir alanı iyi bilmek, geniş bir alanı yüzeysel bilmekten hızlıdır."
+    breadcrumb={breadcrumb}
+    watermark="33"
+  />
+
+  <section class="section">
+    <div class="container-site">
+      <ul class="area-grid" data-reveal-group data-reveal-stagger="0.08">
+        {
+          items.map((item) => (
+            <li>
+              <AreaCard
+                href={`/bolgeler/${item.id}/`}
+                district={item.data.title}
+                short={item.data.lead}
+                code={`0${item.data.order}`}
+                as="h2"
+              />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <Marquee items={localSpots} speed={0.42} tone="ink" />
+
+  <section class="section">
+    <div class="container-site why">
+      <div data-reveal="up">
+        <p class="kicker">Neden sadece şehir içi?</p>
+        <h2 class="why__title">Dar alan, hızlı cevap</h2>
+      </div>
+      <div class="why__body" data-reveal="up" data-reveal-delay="0.12">
+        <p data-word-light>
+          Bir çekici şehirlerarası bir işe çıktığında saatlerce şehirden uzakta kalır. Aynı
+          saatlerde şehir içinde yolda kalan bir sürücü, o çekiciyi bekleyemez. Biz işimizi
+          Mersin merkeziyle sınırlı tutuyoruz — çünkü hızın kaynağı yakın olmak.
+        </p>
+        <p>
+          Bunun ikinci bir faydası daha var: aynı sokaklarda çalışmak, o sokakları öğretiyor.
+          Hangi otoparkın rampası dik, hangi sokak tek yön, hangi bulvarda hangi saatte
+          durulmaz — bunlar haritadan öğrenilmiyor.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .area-grid {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 700px) {
+    .area-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1080px) {
+    .area-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .area-grid li {
+    display: flex;
+  }
+
+  .area-grid li > :global(*) {
+    inline-size: 100%;
+  }
+
+  .why {
+    display: grid;
+    gap: clamp(1.75rem, 4vw, 3rem);
+  }
+
+  @media (min-width: 900px) {
+    .why {
+      grid-template-columns: minmax(0, 20rem) 1fr;
+    }
+  }
+
+  .why__title {
+    margin-block-start: 0.9rem;
+    font-size: var(--text-h2);
+    line-height: var(--text-h2--line-height);
+    letter-spacing: var(--text-h2--letter-spacing);
+  }
+
+  .why__body {
+    display: grid;
+    gap: 1.25rem;
+    max-inline-size: 58ch;
+    font-size: var(--text-lead);
+    line-height: 1.6;
+    color: var(--color-ink-600);
+  }
+
+  .why__body p:first-child {
+    color: var(--color-ink-900);
+  }
+</style>

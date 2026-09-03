@@ -1,0 +1,249 @@
+---
+import Icon from './Icon.astro';
+import Figure from './Figure.astro';
+import { site } from '~/data/site';
+
+const promises = [
+  { icon: 'clock' as const, label: '7/24 açık', note: 'Gece, hafta sonu, bayram' },
+  { icon: 'map-pin' as const, label: 'Mersin şehir içi', note: '4 merkez ilçenin tamamı' },
+  { icon: 'car' as const, label: 'Kayar kasa', note: 'Aracınız zemine sürtmez' },
+];
+---
+
+<section class="hero band-ink" data-scene>
+  <div class="hero__media" aria-hidden="true">
+    <div class="hero__media-inner" data-hero-zoom>
+      <Figure
+        name="hero-cekici"
+        alt=""
+        width={2400}
+        height={1600}
+        sizes="100vw"
+        loading="eager"
+        fetchpriority="high"
+        cover
+        class="hero__picture"
+        imgClass="hero__img"
+      />
+    </div>
+    <span class="hero__scrim"></span>
+  </div>
+
+  <div class="container-site hero__inner">
+    <p class="hero__kicker kicker">Mersin · 7/24 oto çekici</p>
+
+    <h1 class="hero__title" data-line-reveal data-line-delay="0.25">
+      <span>Yolda kaldınız.</span>
+      <span class="hero__title-accent">Biz yoldayız.</span>
+    </h1>
+
+    <p class="hero__lead" data-reveal="up" data-reveal-delay="0.55">
+      Mersin şehir içinde binek ve hafif ticari araçlar için çekici ve kurtarma.
+      Konumunuzu paylaşın — kayar kasa çekicimiz aracınızı çizmeden alsın,
+      istediğiniz servise bıraksın.
+    </p>
+
+    <div class="hero__actions" data-reveal="up" data-reveal-delay="0.68">
+      <a href={site.phone.href} class="btn btn--signal btn--lg" data-magnetic="0.18">
+        <Icon name="phone" size={20} />
+        {site.phone.display}
+      </a>
+      <a href={site.whatsapp.url} class="btn btn--outline btn--lg" target="_blank" rel="noopener">
+        <Icon name="whatsapp" size={20} />
+        Konum gönder
+      </a>
+    </div>
+
+    <ul class="hero__promises" data-reveal-group data-reveal-stagger="0.09">
+      {
+        promises.map((p) => (
+          <li>
+            <Icon name={p.icon} size={18} />
+            <span class="hero__promise-label">{p.label}</span>
+            <span class="hero__promise-note">{p.note}</span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  <a href="#hizmetler" class="hero__scroll" aria-label="Hizmetlere kaydır">
+    <span class="meta">Kaydır</span>
+    <Icon name="arrow-down" size={16} />
+  </a>
+
+  <div class="hazard-bar" aria-hidden="true"></div>
+</section>
+
+<style>
+  .hero {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    min-block-size: min(100svh, 54rem);
+    padding-block-start: calc(var(--header-h) + 2rem);
+    overflow: hidden;
+  }
+
+  .hero__media {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+  }
+
+  .hero__media-inner {
+    position: absolute;
+    inset: -4%;
+    will-change: transform;
+  }
+
+  .hero__picture,
+  .hero__media-inner :global(.hero__img) {
+    inline-size: 100%;
+    block-size: 100%;
+  }
+
+  .hero__picture {
+    block-size: 100%;
+  }
+
+  .hero__scrim {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(
+        180deg,
+        rgb(13 17 16 / 0.9) 0%,
+        rgb(13 17 16 / 0.62) 26%,
+        rgb(13 17 16 / 0.82) 70%,
+        rgb(13 17 16 / 0.97) 100%
+      ),
+      linear-gradient(100deg, rgb(13 17 16 / 0.94) 0%, rgb(13 17 16 / 0.72) 46%, rgb(13 17 16 / 0.22) 78%);
+  }
+
+  .hero__inner {
+    position: relative;
+    z-index: 1;
+    padding-block: clamp(2rem, 5vw, 3.5rem) calc(clamp(3.5rem, 7vw, 5.5rem) + var(--bar-h));
+    max-inline-size: 68rem;
+  }
+
+  .hero__title {
+    margin-block-start: 1.1rem;
+    font-size: var(--text-mega);
+    line-height: var(--text-mega--line-height);
+    letter-spacing: var(--text-mega--letter-spacing);
+    font-weight: 800;
+    font-stretch: 100%;
+  }
+
+  .hero__title span {
+    display: block;
+  }
+
+  .hero__title :global(.hero__title-accent) {
+    color: var(--color-amber-400);
+  }
+
+  .hero__lead {
+    margin-block-start: 1.5rem;
+    max-inline-size: 48ch;
+    font-size: var(--text-lead);
+    line-height: var(--text-lead--line-height);
+    color: var(--color-ink-fg-muted);
+  }
+
+  .hero__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-block-start: 2rem;
+  }
+
+  .hero__promises {
+    display: grid;
+    gap: 1px;
+    margin: clamp(2.25rem, 5vw, 3.25rem) 0 0;
+    padding: 0;
+    list-style: none;
+    background-color: rgb(239 241 236 / 0.16);
+    border: 1px solid rgb(239 241 236 / 0.16);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  @media (min-width: 720px) {
+    .hero__promises {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .hero__promises li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    column-gap: 0.7rem;
+    row-gap: 0.15rem;
+    padding: 1rem 1.15rem;
+    background-color: rgb(13 17 16 / 0.72);
+    backdrop-filter: blur(6px);
+  }
+
+  .hero__promises :global(svg) {
+    grid-row: span 2;
+    color: var(--color-amber-500);
+  }
+
+  .hero__promise-label {
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 600;
+    font-stretch: 92%;
+    color: var(--color-ink-fg);
+  }
+
+  .hero__promise-note {
+    font-size: 0.8125rem;
+    color: var(--color-ink-fg-muted);
+  }
+
+  .hero__scroll {
+    position: absolute;
+    inset-block-end: 1.75rem;
+    inset-inline-end: var(--spacing-gutter);
+    z-index: 1;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--color-ink-fg-muted);
+    text-decoration: none;
+  }
+
+  .hero__scroll :global(svg) {
+    animation: nudge 2.4s var(--ease-in-out-quint) infinite;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .hero__scroll :global(svg) {
+      animation: none;
+    }
+  }
+
+  @keyframes nudge {
+    0%,
+    100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(5px);
+    }
+  }
+
+  @media (min-width: 1100px) {
+    .hero__scroll {
+      display: flex;
+    }
+  }
+</style>

@@ -1,0 +1,150 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  items: { q: string; a: string }[];
+  /** Başlık bu bileşenin dışında verilecekse gizle */
+  title?: string;
+  kicker?: string;
+}
+
+const { items, title, kicker } = Astro.props;
+---
+
+<div class="faq">
+  {
+    (kicker || title) && (
+      <div class="faq__head" data-reveal="up">
+        {kicker && <p class="kicker">{kicker}</p>}
+        {title && <h2 class="faq__title">{title}</h2>}
+      </div>
+    )
+  }
+
+  <div class="faq__list" data-reveal-group>
+    {
+      items.map((item) => (
+        <details class="faq__item">
+          <summary>
+            <span class="faq__q">{item.q}</span>
+            <span class="faq__icon" aria-hidden="true">
+              <Icon name="chevron-down" size={20} />
+            </span>
+          </summary>
+          <div class="faq__a">
+            <p>{item.a}</p>
+          </div>
+        </details>
+      ))
+    }
+  </div>
+</div>
+
+<style>
+  .faq__head {
+    margin-block-end: 2rem;
+  }
+
+  .faq__title {
+    margin-block-start: 0.9rem;
+    font-size: var(--text-h2);
+    line-height: var(--text-h2--line-height);
+    letter-spacing: var(--text-h2--letter-spacing);
+  }
+
+  .faq__list {
+    border-block-start: 1px solid var(--color-stone-3);
+  }
+
+  :global(.band-ink) .faq__list {
+    border-block-start-color: rgb(239 241 236 / 0.16);
+  }
+
+  .faq__item {
+    border-block-end: 1px solid var(--color-stone-3);
+  }
+
+  :global(.band-ink) .faq__item {
+    border-block-end-color: rgb(239 241 236 / 0.16);
+  }
+
+  summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+    padding-block: 1.35rem;
+    cursor: pointer;
+    list-style: none;
+  }
+
+  summary::-webkit-details-marker {
+    display: none;
+  }
+
+  .faq__q {
+    font-family: var(--font-display);
+    font-size: clamp(1.05rem, 0.98rem + 0.35vw, 1.25rem);
+    font-weight: 600;
+    font-stretch: 96%;
+    letter-spacing: -0.012em;
+    color: var(--color-ink-900);
+    text-wrap: balance;
+  }
+
+  :global(.band-ink) .faq__q {
+    color: var(--color-ink-fg);
+  }
+
+  .faq__icon {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 2.25rem;
+    block-size: 2.25rem;
+    border: 1px solid var(--color-stone-3);
+    border-radius: var(--radius-pill);
+    color: var(--color-ink-600);
+    transition:
+      transform var(--duration-base) var(--ease-out-quart),
+      background-color var(--duration-base) var(--ease-out-quart),
+      border-color var(--duration-base) var(--ease-out-quart),
+      color var(--duration-base) var(--ease-out-quart);
+  }
+
+  summary:hover .faq__icon {
+    border-color: var(--color-ink-900);
+  }
+
+  details[open] .faq__icon {
+    transform: rotate(180deg);
+    background-color: var(--color-amber-500);
+    border-color: var(--color-amber-500);
+    color: var(--color-ink-900);
+  }
+
+  .faq__a {
+    padding-block-end: 1.5rem;
+    max-inline-size: 62ch;
+    color: var(--color-ink-600);
+    line-height: 1.7;
+  }
+
+  :global(.band-ink) .faq__a {
+    color: var(--color-ink-fg-muted);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    details[open] .faq__a {
+      animation: faq-in var(--duration-base) var(--ease-out-quart);
+    }
+  }
+
+  @keyframes faq-in {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+  }
+</style>

@@ -1,0 +1,81 @@
+---
+import Base from '~/layouts/Base.astro';
+import PageHero from '~/components/PageHero.astro';
+import { site } from '~/data/site';
+
+const path = '/gizlilik-politikasi/';
+const breadcrumb = [{ name: 'Gizlilik Politikası', href: path }];
+---
+
+<Base
+  title="Gizlilik Politikası | Toroslar Araç Kurtarma"
+  description="Bu sitede form, üyelik ve takip çerezi bulunmaz. Hangi verilerin nasıl işlendiğini ve tarayıcınızda ne saklandığını açıklayan gizlilik politikası."
+  path={path}
+  breadcrumb={breadcrumb}
+  headerOnDark
+>
+  <PageHero
+    kicker="Yasal"
+    title="Gizlilik Politikası"
+    lead="Kısa tutabiliyoruz, çünkü bu sitede toplanan bir veri yok."
+    breadcrumb={breadcrumb}
+    showCta={false}
+  />
+
+  <section class="section">
+    <div class="container-site">
+      <div class="prose">
+        <h2>Özet</h2>
+        <p>
+          Bu internet sitesinde <strong>iletişim formu, üyelik sistemi, sepet veya ödeme
+          altyapısı bulunmamaktadır</strong>. Site tamamen statik olarak yayımlanır ve
+          ziyaretçilerden veri toplamaz.
+        </p>
+
+        <h2>Çerezler</h2>
+        <p>
+          Bu sitede reklam, profilleme veya davranışsal takip amaçlı çerez
+          <strong>kullanılmamaktadır</strong>. Sitenin çalışması için üçüncü taraf bir izleme
+          kodu yüklenmez.
+        </p>
+        <p>
+          Tarayıcınız, herhangi bir web sitesinde olduğu gibi görsel ve yazı tipi dosyalarını
+          kendi önbelleğinde saklayabilir. Bu, sitenin daha hızlı açılmasını sağlayan teknik
+          bir işlemdir ve kimliğinizle ilişkilendirilmez.
+        </p>
+
+        <h2>Sunucu kayıtları</h2>
+        <p>
+          Site, barındırma sağlayıcısının altyapısında yayımlanmaktadır. Sağlayıcı, güvenlik
+          ve altyapı yönetimi amacıyla standart erişim kayıtları (IP adresi, tarayıcı bilgisi,
+          erişim zamanı) tutabilir. Bu kayıtlara tarafımızca pazarlama amacıyla erişilmez.
+        </p>
+
+        <h2>Dış bağlantılar</h2>
+        <p>
+          Sitede WhatsApp’a yönlendiren bağlantılar bulunur. Bu bağlantıya tıkladığınızda
+          ilgili platformun kendi gizlilik politikası geçerli olur. Platform üzerinden
+          ilettiğiniz mesajlar o platformun sunucularında işlenir.
+        </p>
+
+        <h2>Telefonla iletilen bilgiler</h2>
+        <p>
+          Bizi aradığınızda veya WhatsApp’tan yazdığınızda ilettiğiniz bilgiler yalnızca
+          talep ettiğiniz hizmetin verilebilmesi için kullanılır. Ayrıntı için
+          <a href="/kvkk-aydinlatma-metni/">KVKK Aydınlatma Metni</a> sayfasına bakabilirsiniz.
+        </p>
+
+        <h2>Değişiklikler</h2>
+        <p>
+          Bu politika, sitede yapılacak değişikliklere bağlı olarak güncellenebilir. Güncel
+          metin her zaman bu sayfada yayımlanır.
+        </p>
+
+        <h2>İletişim</h2>
+        <p>
+          Sorularınız için: <a href={site.phone.href}>{site.phone.display}</a>
+        </p>
+      </div>
+    </div>
+  </section>
+</Base>

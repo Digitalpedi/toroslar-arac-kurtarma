@@ -1,0 +1,191 @@
+---
+import Icon from './Icon.astro';
+import type { IconName } from '~/lib/icons';
+
+interface Props {
+  kicker?: string;
+  title: string;
+  steps: { title: string; text: string; icon: IconName; meta?: string }[];
+}
+
+const { kicker, title, steps } = Astro.props;
+---
+
+<section class="seq band-ink" data-sequence data-scene>
+  <div class="seq__wrap">
+    <div class="container-site seq__inner">
+      <div class="seq__head">
+        {kicker && <p class="kicker">{kicker}</p>}
+        <h2 class="seq__title">{title}</h2>
+        <div class="seq__progress" data-sequence-progress aria-hidden="true">
+          <span class="seq__progress-fill"></span>
+        </div>
+      </div>
+
+      <ol class="seq__steps">
+        {
+          steps.map((s, i) => (
+            <li class="seq__step" data-step>
+              <span class="seq__index">{String(i + 1).padStart(2, '0')}</span>
+              <span class="seq__icon">
+                <Icon name={s.icon} size={22} />
+              </span>
+              <div class="seq__body">
+                <h3 class="seq__step-title">{s.title}</h3>
+                <p class="seq__text">{s.text}</p>
+                {s.meta && <p class="meta seq__meta">{s.meta}</p>}
+              </div>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  .seq {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .seq__wrap {
+    padding-block: var(--spacing-section);
+  }
+
+  .seq__inner {
+    display: grid;
+    gap: clamp(2rem, 5vw, 4rem);
+    inline-size: 100%;
+  }
+
+  @media (min-width: 980px) {
+    .seq__inner {
+      grid-template-columns: minmax(16rem, 22rem) 1fr;
+      align-items: start;
+    }
+
+    /* Sol sütun sabit kalır, adımlar yanından akar — pin yok, sticky var */
+    .seq__head {
+      position: sticky;
+      inset-block-start: calc(var(--header-h) + clamp(2rem, 6vh, 5rem));
+    }
+
+    .seq__steps {
+      gap: clamp(1rem, 3vh, 2.5rem);
+    }
+
+    /* Her adım ekranda kendi anını yaşasın */
+    .seq__step {
+      min-block-size: 42vh;
+      align-content: center;
+    }
+  }
+
+  .seq__title {
+    margin-block-start: 0.9rem;
+    font-size: var(--text-h2);
+    line-height: var(--text-h2--line-height);
+    letter-spacing: var(--text-h2--letter-spacing);
+  }
+
+  .seq__progress {
+    position: relative;
+    margin-block-start: 1.75rem;
+    block-size: 4px;
+    inline-size: 100%;
+    max-inline-size: 16rem;
+    background-color: rgb(239 241 236 / 0.18);
+    border-radius: var(--radius-pill);
+    overflow: hidden;
+  }
+
+  .seq__progress-fill {
+    position: absolute;
+    inset-block: 0;
+    inset-inline-start: 0;
+    inline-size: var(--progress, 12%);
+    background-image: var(--hazard-fine);
+    transition: inline-size 80ms linear;
+  }
+
+  .seq__steps {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.25rem;
+  }
+
+  .seq__step {
+    display: grid;
+    grid-template-columns: auto auto 1fr;
+    align-items: start;
+    gap: 1rem;
+    padding: clamp(1rem, 2.2vw, 1.5rem);
+    border-radius: var(--radius-lg);
+    border: 1px solid transparent;
+    /* Pasif adımlar da OKUNABİLİR kalır — aktiflik sinyali zemin ve amber ikon.
+       Daha düşük bir opaklık metni erişilebilirlik eşiğinin altına düşürüyordu. */
+    opacity: 0.66;
+    transition:
+      opacity var(--duration-slow) var(--ease-out-quart),
+      background-color var(--duration-slow) var(--ease-out-quart),
+      border-color var(--duration-slow) var(--ease-out-quart);
+  }
+
+  .seq__step.is-active {
+    opacity: 1;
+    background-color: var(--color-ink-800);
+    border-color: rgb(239 241 236 / 0.14);
+  }
+
+  .seq__index {
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    color: var(--color-amber-500);
+    padding-block-start: 0.55rem;
+  }
+
+  .seq__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 2.75rem;
+    block-size: 2.75rem;
+    border-radius: var(--radius-md);
+    border: 1px solid rgb(239 241 236 / 0.18);
+    color: var(--color-ink-fg);
+    flex: none;
+    transition:
+      background-color var(--duration-slow) var(--ease-out-quart),
+      color var(--duration-slow) var(--ease-out-quart),
+      border-color var(--duration-slow) var(--ease-out-quart);
+  }
+
+  .seq__step.is-active .seq__icon {
+    background-color: var(--color-amber-500);
+    border-color: var(--color-amber-500);
+    color: var(--color-ink-900);
+  }
+
+  .seq__step-title {
+    font-size: clamp(1.15rem, 1rem + 0.6vw, 1.5rem);
+    line-height: 1.2;
+    letter-spacing: -0.015em;
+  }
+
+  .seq__text {
+    margin-block-start: 0.45rem;
+    max-inline-size: 56ch;
+    color: var(--color-ink-fg-muted);
+    font-size: var(--text-small);
+    line-height: 1.65;
+  }
+
+  .seq__meta {
+    margin-block-start: 0.6rem;
+  }
+</style>

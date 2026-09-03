@@ -1,0 +1,69 @@
+# Toroslar Araç Kurtarma
+
+> Mersin şehir içinde binek ve hafif ticari araçlar için 7/24 oto çekici ve araç kurtarma hizmeti. Kayar kasa (platformlu) çekici ile taşıma yapılır; aracın dört tekerleği de yerden kesilir.
+
+## Temel bilgiler
+
+- **İşletme:** Toroslar Araç Kurtarma
+- **Telefon:** 0534 603 02 33 (+905346030233) — WhatsApp aynı numara
+- **Çalışma saatleri:** 7/24 kesintisiz (gece, hafta sonu, resmî tatil dâhil)
+- **Hizmet bölgesi:** Yalnızca Mersin şehir içi — Toroslar, Yenişehir, Mezitli, Akdeniz
+- **Fiziksel adres:** Yok. Mobil hizmet işletmesidir; buluşma noktası aracın bulunduğu yerdir.
+- **Web:** https://toroslar.digitalpedi.com
+
+## Yapılan işler
+
+- Binek otomobil çekici (kayar kasa)
+- Hafif ticari araç kurtarma (panelvan, kamyonet, minibüs, pick-up)
+- Kaza sonrası araç kurtarma
+- Arızalı araç taşıma
+- Kapalı otopark ve dar alan kurtarma
+- Şehir içi planlı araç nakli (galeri, boyahane, muayene, servis)
+
+## Yapılmayan işler
+
+- Yerinde yol yardımı (akü takviyesi, lastik değişimi, yakıt ikmali) — verilmez
+- Ağır vasıta (kamyon, tır, otobüs) taşıma — yapılmaz
+- İş makinesi ve forklift taşıma — yapılmaz
+- Şehirlerarası taşıma — yapılmaz
+- Araç onarımı ve arıza tespiti — yapılmaz
+- Kilitli araç kapısı açma — yapılmaz
+
+## Sayfalar
+
+### Hizmetler
+- [Hizmetler](https://toroslar.digitalpedi.com/hizmetler/): Altı hizmetin listesi, kapsam ve kapsam dışı ayrımı
+- [Oto Çekici](https://toroslar.digitalpedi.com/hizmetler/oto-cekici/): Binek araç çekici; kayar kasa yönteminin gerekçesi
+- [Hafif Ticari Araç Kurtarma](https://toroslar.digitalpedi.com/hizmetler/hafif-ticari-arac-kurtarma/): Panelvan, kamyonet, minibüs; yüklü araçta izlenen yol
+- [Kaza Sonrası Araç Kurtarma](https://toroslar.digitalpedi.com/hizmetler/kaza-sonrasi-arac-kurtarma/): Kaza yerinde ilk adımlar, tutanak, kurtarma sırası
+- [Arızalı Araç Taşıma](https://toroslar.digitalpedi.com/hizmetler/arizali-arac-tasima/): Aracı derhâl durdurmayı gerektiren belirtiler
+- [Kapalı Otopark ve Dar Alan Kurtarma](https://toroslar.digitalpedi.com/hizmetler/kapali-otopark-kurtarma/): Kaydırma takozu, halat-makara, rampa güvenliği
+- [Şehir İçi Araç Nakli](https://toroslar.digitalpedi.com/hizmetler/sehir-ici-arac-nakli/): Çalışan aracın planlı taşınması
+
+### Bölgeler
+- [Bölgeler](https://toroslar.digitalpedi.com/bolgeler/)
+- [Toroslar Çekici](https://toroslar.digitalpedi.com/bolgeler/toroslar-cekici/): Halkkent, Yalınayak, Osmaniye, Güneş, Çukurova
+- [Yenişehir Çekici](https://toroslar.digitalpedi.com/bolgeler/yenisehir-cekici/): Palmiye, Barbaros, Menteş, Çiftlikköy, Limonluk
+- [Mezitli Çekici](https://toroslar.digitalpedi.com/bolgeler/mezitli-cekici/): Viranşehir, Davultepe, Tece, Soli
+- [Akdeniz Çekici](https://toroslar.digitalpedi.com/bolgeler/akdeniz-cekici/): Çamlıbel, Kiremithane, Mesudiye, Nusratiye
+
+### Kurumsal
+- [Kurumsal](https://toroslar.digitalpedi.com/kurumsal/): Çalışma ilkeleri ve künye
+- [Nasıl Çalışır](https://toroslar.digitalpedi.com/surec/): Çağrıdan teslimata beş adım
+- [Sıkça Sorulan Sorular](https://toroslar.digitalpedi.com/sss/)
+- [İletişim](https://toroslar.digitalpedi.com/iletisim/)
+
+### Rehber
+- [Rehber](https://toroslar.digitalpedi.com/rehber/): Yolda kalma, çekici ve araç kurtarma bilgileri
+
+## Sık sorulanların kısa cevapları
+
+**Otomatik vitesli araç nasıl çekilir?** Dört tekerleği de yerden kesilerek, kayar kasa çekiciyle. Otomatik şanzımanın yağ pompası motora bağlıdır; motor dönmezken tekerlekler yerde sürüklenirse şanzıman yağsız çalışır.
+
+**Elektrikli araç nasıl taşınır?** Tam platformla. Tekerlek döndüğünde elektrik motoru jeneratör gibi davranır. Batarya hasarı belirtisi (duman, yanık kokusu, tıslama, şişme) varsa araca yaklaşılmaz; önce 112 aranır.
+
+**Çekici ile kurtarma arasındaki fark nedir?** Çekici, kendi tekerlekleri üzerinde serbestçe duran aracı taşır. Kurtarma, aracın önce bulunduğu yerden çıkarılmasını gerektirir (kaldırıma binme, hendek, çamur, devrilme, sıkışma).
+
+**Kapalı otoparka çekici girer mi?** Girmez; giriş yüksekliği yetersizdir. Araç kaydırma takozlarıyla dışarı çıkarılır, yükleme açık alanda yapılır.
+
+**Ücreti ne belirler?** Mesafe, araç tipi ve ağırlığı, işin türü (taşıma mı kurtarma mı), erişim zorluğu, aracın durumu ve saat.

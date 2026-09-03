@@ -1,0 +1,113 @@
+---
+import Icon from './Icon.astro';
+import { site } from '~/data/site';
+
+interface Props {
+  title?: string;
+  lead?: string;
+  /** Koyu bant yerine açık taş zemin */
+  tone?: 'ink' | 'stone';
+}
+
+const {
+  title = 'Aracınız yolda mı kaldı?',
+  lead = 'Konumunuzu söyleyin, en yakın çekicimizi yönlendirelim. Telefon 7/24 açık.',
+  tone = 'ink',
+} = Astro.props;
+---
+
+<section class:list={['cta-band', tone === 'ink' ? 'band-ink' : 'cta-band--stone']} data-scene>
+  <div class="container-site cta-band__inner">
+    <div class="cta-band__copy">
+      <p class="kicker">{site.hoursLabel}</p>
+      <h2 class="cta-band__title">{title}</h2>
+      <p class="cta-band__lead">{lead}</p>
+    </div>
+
+    <div class="cta-band__actions">
+      <a href={site.phone.href} class="btn btn--signal btn--lg" data-magnetic="0.16">
+        <Icon name="phone" size={20} />
+        {site.phone.display}
+      </a>
+      <a
+        href={site.whatsapp.url}
+        class="btn btn--outline btn--lg"
+        target="_blank"
+        rel="noopener"
+      >
+        <Icon name="whatsapp" size={20} />
+        WhatsApp
+      </a>
+      <p class="meta cta-band__note">Konum atmanız yeterli — adres tarif etmenize gerek yok.</p>
+    </div>
+  </div>
+</section>
+
+<style>
+  .cta-band {
+    position: relative;
+    overflow: hidden;
+    padding-block: clamp(3rem, 6vw, 5rem);
+  }
+
+  .cta-band--stone {
+    background-color: var(--color-stone-2);
+  }
+
+  /* Arka planda dev, kesilmiş ikaz şeridi — sinematik derinlik */
+  .cta-band::before {
+    content: '';
+    position: absolute;
+    inset-block: -30%;
+    inset-inline-end: -12%;
+    inline-size: 46%;
+    background-image: var(--hazard);
+    background-size: 60px 60px;
+    opacity: 0.14;
+    transform: rotate(6deg);
+    pointer-events: none;
+  }
+
+  .cta-band__inner {
+    position: relative;
+    display: grid;
+    gap: clamp(1.75rem, 4vw, 3rem);
+    align-items: center;
+  }
+
+  @media (min-width: 880px) {
+    .cta-band__inner {
+      grid-template-columns: 1fr auto;
+    }
+  }
+
+  .cta-band__title {
+    margin-block-start: 0.85rem;
+    font-size: var(--text-h2);
+    line-height: var(--text-h2--line-height);
+    letter-spacing: var(--text-h2--letter-spacing);
+  }
+
+  .cta-band__lead {
+    margin-block-start: 0.85rem;
+    max-inline-size: 38ch;
+    font-size: var(--text-lead);
+    line-height: 1.55;
+    color: var(--color-ink-fg-muted);
+  }
+
+  .cta-band--stone .cta-band__lead {
+    color: var(--color-ink-600);
+  }
+
+  .cta-band__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+
+  .cta-band__note {
+    flex-basis: 100%;
+    margin: 0;
+  }
+</style>

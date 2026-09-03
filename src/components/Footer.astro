@@ -1,0 +1,193 @@
+---
+import Brand from './Brand.astro';
+import Icon from './Icon.astro';
+import { site, footerNav } from '~/data/site';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="site-footer band-ink">
+  <div class="hazard-bar" aria-hidden="true"></div>
+
+  <div class="container-site site-footer__inner">
+    <div class="site-footer__lead">
+      <Brand onDark />
+      <p class="site-footer__pitch">
+        Mersin şehir içinde binek ve hafif ticari araçlar için 7/24 çekici ve kurtarma.
+        Aracınız nerede kaldıysa oraya geliriz.
+      </p>
+
+      <ul class="site-footer__contact">
+        <li>
+          <Icon name="phone" size={18} />
+          <a href={site.phone.href} class="site-footer__phone">{site.phone.display}</a>
+        </li>
+        <li>
+          <Icon name="whatsapp" size={18} />
+          <a href={site.whatsapp.url} target="_blank" rel="noopener">WhatsApp’tan konum gönder</a>
+        </li>
+        <li>
+          <Icon name="clock" size={18} />
+          <span>{site.hoursLabel}</span>
+        </li>
+        <li>
+          <Icon name="map-pin" size={18} />
+          <span>Mersin — Toroslar, Yenişehir, Mezitli, Akdeniz</span>
+        </li>
+      </ul>
+    </div>
+
+    <nav class="site-footer__nav" aria-label="Alt menü">
+      {
+        footerNav.map((col) => (
+          <div class="site-footer__col">
+            <h2 class="site-footer__col-title">{col.title}</h2>
+            <ul>
+              {col.links.map((l) => (
+                <li>
+                  <a href={l.href} class="link-hazard">
+                    {l.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </nav>
+  </div>
+
+  <div class="container-site">
+    <div class="lane-rule" aria-hidden="true"></div>
+    <div class="site-footer__bar">
+      <p class="meta">© {year} {site.name} · Mersin</p>
+      <p class="meta site-footer__credit">
+        <a href="https://digitalpedi.com" rel="noopener">Yazılım: Digitalpedi</a>
+      </p>
+    </div>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    margin-block-start: auto;
+    padding-block-end: calc(var(--bar-h) + 1.5rem);
+  }
+
+  .site-footer__inner {
+    display: grid;
+    gap: clamp(2.5rem, 5vw, 4rem);
+    padding-block: clamp(3rem, 6vw, 4.75rem) clamp(2rem, 4vw, 3rem);
+  }
+
+  @media (min-width: 900px) {
+    .site-footer__inner {
+      grid-template-columns: minmax(18rem, 25rem) 1fr;
+    }
+  }
+
+  .site-footer__pitch {
+    margin-block-start: 1.15rem;
+    max-inline-size: 34ch;
+    color: var(--color-ink-fg-muted);
+    font-size: var(--text-small);
+    line-height: 1.65;
+  }
+
+  .site-footer__contact {
+    margin: 1.5rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  .site-footer__contact li {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-size: var(--text-small);
+    color: var(--color-ink-fg-muted);
+  }
+
+  .site-footer__contact :global(svg) {
+    color: var(--color-amber-500);
+    flex: none;
+  }
+
+  .site-footer__contact a {
+    color: var(--color-ink-fg);
+    text-decoration: none;
+  }
+
+  .site-footer__contact a:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--color-amber-500);
+  }
+
+  .site-footer__phone {
+    font-family: var(--font-mono);
+    font-size: 1.0625rem;
+    letter-spacing: 0.01em;
+  }
+
+  .site-footer__nav {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(1.75rem, 4vw, 2.5rem);
+  }
+
+  @media (min-width: 720px) {
+    .site-footer__nav {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .site-footer__col-title {
+    font-family: var(--font-display);
+    font-size: var(--text-label);
+    font-weight: 600;
+    font-stretch: 80%;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--color-amber-400);
+    margin-block-end: 1rem;
+  }
+
+  .site-footer__col ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .site-footer__col a {
+    font-size: var(--text-small);
+    color: var(--color-ink-fg-muted);
+    text-decoration: none;
+    transition: color var(--duration-fast) linear;
+  }
+
+  .site-footer__col a:hover {
+    color: var(--color-ink-fg);
+  }
+
+  .site-footer__bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+    padding-block: 1.5rem;
+  }
+
+  .site-footer__credit a {
+    color: var(--color-ink-fg-muted);
+    text-decoration: none;
+  }
+
+  .site-footer__credit a:hover {
+    color: var(--color-amber-400);
+  }
+</style>

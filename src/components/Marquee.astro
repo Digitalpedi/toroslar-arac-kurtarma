@@ -1,0 +1,67 @@
+---
+interface Props {
+  items: readonly string[];
+  speed?: number;
+  tone?: 'ink' | 'stone' | 'amber';
+}
+
+const { items, speed = 0.5, tone = 'ink' } = Astro.props;
+---
+
+<div class:list={['marquee', `marquee--${tone}`]} data-marquee data-marquee-speed={speed}>
+  <div class="marquee__track" aria-hidden="true">
+    {
+      items.map((it) => (
+        <span class="marquee__item">
+          <span class="marquee__dot" />
+          {it}
+        </span>
+      ))
+    }
+  </div>
+  <span class="sr-only">Hizmet verilen bölgeler: {items.join(', ')}.</span>
+</div>
+
+<style>
+  .marquee {
+    padding-block: 1.05rem;
+    border-block: 1px solid var(--color-stone-3);
+  }
+
+  .marquee--ink {
+    background-color: var(--color-ink-900);
+    border-block-color: rgb(239 241 236 / 0.14);
+    color: var(--color-ink-fg-muted);
+  }
+
+  .marquee--amber {
+    background-color: var(--color-amber-500);
+    border-block-color: var(--color-ink-900);
+    color: var(--color-ink-900);
+  }
+
+  .marquee__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 1.4rem;
+    padding-inline-end: 1.4rem;
+    font-family: var(--font-display);
+    font-size: clamp(0.9rem, 0.85rem + 0.25vw, 1.05rem);
+    font-weight: 500;
+    font-stretch: 86%;
+    letter-spacing: 0.02em;
+    white-space: nowrap;
+  }
+
+  .marquee__dot {
+    inline-size: 6px;
+    block-size: 6px;
+    border-radius: 50%;
+    background-color: var(--color-amber-500);
+    flex: none;
+  }
+
+  .marquee--amber .marquee__dot {
+    background-color: var(--color-ink-900);
+  }
+</style>

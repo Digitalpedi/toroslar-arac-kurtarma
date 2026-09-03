@@ -1,0 +1,317 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '~/layouts/Base.astro';
+import PageHero from '~/components/PageHero.astro';
+import ServiceCard from '~/components/ServiceCard.astro';
+import CtaBand from '~/components/CtaBand.astro';
+import Icon from '~/components/Icon.astro';
+import { districts } from '~/data/site';
+import { itemListNode, serviceNode } from '~/lib/schema';
+
+const items = (await getCollection('hizmetler')).sort((a, b) => a.data.order - b.data.order);
+
+const path = '/hizmetler/';
+const breadcrumb = [{ name: 'Hizmetler', href: path }];
+
+const schema = [
+  serviceNode({
+    name: 'Mersin şehir içi oto çekici ve araç kurtarma',
+    description:
+      'Binek ve hafif ticari araçlar için 7/24 çekici, kaza kurtarma, arızalı araç taşıma ve dar alan kurtarma hizmetleri.',
+    path,
+  }),
+  itemListNode({
+    path,
+    items: items.map((i) => ({ name: i.data.title, href: `/hizmetler/${i.id}/` })),
+  }),
+];
+---
+
+<Base
+  title="Hizmetler | Mersin Oto Çekici ve Araç Kurtarma 7/24"
+  description="Mersin şehir içinde binek ve hafif ticari araçlar için 7/24 çekici hizmetleri: oto çekici, kaza kurtarma, arızalı araç taşıma, kapalı otopark kurtarma ve planlı nakil."
+  path={path}
+  breadcrumb={breadcrumb}
+  schema={schema}
+  headerOnDark
+>
+  <PageHero
+    kicker="Ne yapıyoruz"
+    title="Binek ve hafif ticari araçlar için altı ayrı iş"
+    lead="Hepsi aynı şeye benziyor gibi görünür ama değil. Aracın nerede olduğu, nasıl durduğu ve nereye gideceği işi baştan farklılaştırır."
+    breadcrumb={breadcrumb}
+    watermark="06"
+  />
+
+  <section class="section">
+    <div class="container-site">
+      <ul class="svc-grid" data-reveal-group data-reveal-stagger="0.07">
+        {
+          items.map((item) => (
+            <li>
+              <ServiceCard
+                href={`/hizmetler/${item.id}/`}
+                title={item.data.title}
+                summary={item.data.summary}
+                icon={item.data.icon}
+                index={item.data.order}
+                as="h2"
+              />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section-sm band-ink" data-scene>
+    <div class="container-site scope">
+      <div class="scope__col" data-reveal="up">
+        <p class="kicker">Kapsam</p>
+        <h2 class="scope__title">Yaptığımız ve yapmadığımız işler</h2>
+        <p class="scope__lead">
+          Yapmadığımız bir işi “yaparız” demek, sizin zamanınızı çalar. Bu yüzden sınırı
+          baştan çiziyoruz.
+        </p>
+      </div>
+
+      <div class="scope__lists" data-reveal="up" data-reveal-delay="0.12">
+        <div>
+          <h3 class="scope__head scope__head--yes">
+            <Icon name="check" size={18} /> Yapıyoruz
+          </h3>
+          <ul class="scope__list">
+            <li>Binek otomobiller</li>
+            <li>Panelvan, kamyonet, minibüs ve pick-up</li>
+            <li>Kaza, arıza ve dar alan kurtarma</li>
+            <li>Planlı nakil: galeri, boyahane, muayene, servis</li>
+            <li>Mersin şehir içi — Toroslar, Yenişehir, Mezitli, Akdeniz</li>
+            <li>7/24 — gece, hafta sonu, resmî tatil</li>
+          </ul>
+        </div>
+
+        <div>
+          <h3 class="scope__head scope__head--no">
+            <Icon name="close" size={17} /> Yapmıyoruz
+          </h3>
+          <ul class="scope__list scope__list--no">
+            <li>Yerinde yol yardımı: akü takviye, lastik değişimi, yakıt ikmali</li>
+            <li>Kamyon, tır, otobüs gibi ağır vasıtalar</li>
+            <li>İş makinesi ve forklift taşıma</li>
+            <li>Şehirlerarası taşımalar</li>
+            <li>Araç onarımı ve arıza tespiti</li>
+            <li>Kilitli araç kapısı açma</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section-sm">
+    <div class="container-site">
+      <p class="kicker">Nerede</p>
+      <h2 class="area-head">Hizmet verdiğimiz ilçeler</h2>
+      <ul class="area-chips" data-reveal-group>
+        {
+          districts.map((d) => (
+            <li>
+              <a href={`/bolgeler/${d.slug}/`} class="area-chip">
+                <Icon name="map-pin" size={16} />
+                <span>{d.district}</span>
+                <span class="area-chip__short">{d.short}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .svc-grid {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 700px) {
+    .svc-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1080px) {
+    .svc-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .svc-grid li {
+    display: flex;
+  }
+
+  .svc-grid li > :global(*) {
+    inline-size: 100%;
+  }
+
+  .scope {
+    display: grid;
+    gap: clamp(2rem, 5vw, 3.5rem);
+  }
+
+  @media (min-width: 980px) {
+    .scope {
+      grid-template-columns: minmax(0, 22rem) 1fr;
+    }
+  }
+
+  .scope__title {
+    margin-block-start: 0.9rem;
+    font-size: var(--text-h2);
+    line-height: var(--text-h2--line-height);
+    letter-spacing: var(--text-h2--letter-spacing);
+  }
+
+  .scope__lead {
+    margin-block-start: 1rem;
+    color: var(--color-ink-fg-muted);
+    max-inline-size: 34ch;
+  }
+
+  .scope__lists {
+    display: grid;
+    gap: clamp(1.75rem, 4vw, 2.5rem);
+  }
+
+  @media (min-width: 700px) {
+    .scope__lists {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .scope__head {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-display);
+    font-size: var(--text-label);
+    font-stretch: 80%;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding-block-end: 0.85rem;
+    border-block-end: 1px solid rgb(239 241 236 / 0.16);
+  }
+
+  .scope__head--yes {
+    color: var(--color-amber-400);
+  }
+
+  .scope__head--no {
+    color: var(--color-ink-fg-muted);
+  }
+
+  .scope__list {
+    margin: 1.15rem 0 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.75rem;
+    font-size: var(--text-small);
+    line-height: 1.55;
+    color: var(--color-ink-fg);
+  }
+
+  .scope__list--no {
+    color: var(--color-ink-fg-muted);
+  }
+
+  .scope__list li {
+    padding-inline-start: 1.15rem;
+    position: relative;
+  }
+
+  .scope__list li::before {
+    content: '';
+    position: absolute;
+    inset-block-start: 0.62em;
+    inset-inline-start: 0;
+    inline-size: 6px;
+    block-size: 6px;
+    border-radius: 50%;
+    background-color: var(--color-amber-500);
+  }
+
+  .scope__list--no li::before {
+    background-color: var(--color-ink-500);
+  }
+
+  .area-head {
+    margin-block: 0.9rem 1.5rem;
+    font-size: var(--text-h3);
+  }
+
+  .area-chips {
+    display: grid;
+    gap: 0.75rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 700px) {
+    .area-chips {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1080px) {
+    .area-chips {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  .area-chip {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    column-gap: 0.5rem;
+    padding: 1.05rem 1.25rem;
+    block-size: 100%;
+    background-color: var(--color-stone-0);
+    border: 1px solid var(--color-stone-3);
+    border-radius: var(--radius-lg);
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    text-decoration: none;
+    color: var(--color-ink-900);
+    transition:
+      border-color var(--duration-base) var(--ease-out-quart),
+      box-shadow var(--duration-base) var(--ease-out-quart);
+  }
+
+  .area-chip:hover {
+    border-color: var(--color-ink-900);
+    box-shadow: var(--shadow-md);
+  }
+
+  .area-chip :global(svg) {
+    color: var(--color-amber-600);
+  }
+
+  .area-chip__short {
+    grid-column: 2;
+    font-family: var(--font-body);
+    font-size: 0.8125rem;
+    font-weight: 400;
+    line-height: 1.45;
+    color: var(--color-ink-600);
+    margin-block-start: 0.25rem;
+  }
+</style>

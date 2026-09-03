@@ -1,0 +1,161 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '~/layouts/Base.astro';
+import PageHero from '~/components/PageHero.astro';
+import CtaBand from '~/components/CtaBand.astro';
+import Icon from '~/components/Icon.astro';
+import { itemListNode } from '~/lib/schema';
+
+const items = (await getCollection('rehber')).sort(
+  (a, b) => b.data.date.getTime() - a.data.date.getTime(),
+);
+
+const path = '/rehber/';
+const breadcrumb = [{ name: 'Rehber', href: path }];
+
+const fmt = new Intl.DateTimeFormat('tr-TR', { day: 'numeric', month: 'long', year: 'numeric' });
+
+const schema = [
+  itemListNode({
+    path,
+    items: items.map((i) => ({ name: i.data.title, href: `/rehber/${i.id}/` })),
+  }),
+];
+---
+
+<Base
+  title="Rehber | Yolda Kalma, Çekici ve Araç Kurtarma Bilgileri"
+  description="Yolda kaldığınızda ne yapmalısınız, otomatik vitesli araç nasıl çekilir, kaza sonrası süreç nasıl işler? Sahadan çıkmış, işe yarar bilgiler."
+  path={path}
+  breadcrumb={breadcrumb}
+  schema={schema}
+  headerOnDark
+>
+  <PageHero
+    kicker="Rehber"
+    title="Yolda kalmadan önce okunacak yazılar"
+    lead="Bu yazıların hepsi sahadan çıktı. Reklam metni değil; aracınız yolda kaldığında gerçekten işinize yarayacak bilgiler."
+    breadcrumb={breadcrumb}
+    watermark="?"
+    showCta={false}
+  />
+
+  <section class="section">
+    <div class="container-site">
+      <ul class="posts" data-reveal-group data-reveal-stagger="0.07">
+        {
+          items.map((item) => (
+            <li>
+              <a href={`/rehber/${item.id}/`} class="card card--hazard post">
+                <span class="post__top">
+                  <span class="post__cat">{item.data.category}</span>
+                  <span class="meta">{item.data.readingTime} dk okuma</span>
+                </span>
+                <h2 class="post__title">{item.data.title}</h2>
+                <p class="post__sum">{item.data.summary}</p>
+                <span class="post__foot">
+                  <time class="meta" datetime={item.data.date.toISOString()}>
+                    {fmt.format(item.data.date)}
+                  </time>
+                  <Icon name="arrow-up-right" size={16} class="post__arrow" />
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <CtaBand
+    title="Okumaya vaktiniz yok mu?"
+    lead="Sorun değil. Aracınız şu an yolda kaldıysa doğrudan arayın — geri kalanını telefonda konuşuruz."
+  />
+</Base>
+
+<style>
+  .posts {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 720px) {
+    .posts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1120px) {
+    .posts {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .posts li {
+    display: flex;
+  }
+
+  .post {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    inline-size: 100%;
+    padding: clamp(1.35rem, 2.4vw, 1.85rem);
+    text-decoration: none;
+    overflow: hidden;
+  }
+
+  .post__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .post__cat {
+    display: inline-block;
+    padding: 0.28rem 0.7rem;
+    background-color: var(--color-stone-2);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-display);
+    font-size: var(--text-label);
+    font-stretch: 82%;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-ink-700);
+  }
+
+  .post__title {
+    font-size: clamp(1.15rem, 1.02rem + 0.5vw, 1.4rem);
+    line-height: 1.22;
+    letter-spacing: -0.015em;
+  }
+
+  .post__sum {
+    flex: 1 1 auto;
+    font-size: var(--text-small);
+    line-height: 1.6;
+    color: var(--color-ink-600);
+  }
+
+  .post__foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-block-start: 0.85rem;
+    border-block-start: 1px solid var(--color-stone-3);
+  }
+
+  .post__arrow {
+    color: var(--color-amber-700);
+    transition: transform var(--duration-base) var(--ease-out-quart);
+  }
+
+  .post:hover .post__arrow {
+    transform: translate(2px, -2px);
+  }
+</style>

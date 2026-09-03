@@ -1,0 +1,447 @@
+---
+import Brand from './Brand.astro';
+import Icon from './Icon.astro';
+import { site, nav } from '~/data/site';
+
+interface Props {
+  /** Sayfa koyu bir hero ile açılıyorsa header şeffaf + açık metinle başlar */
+  onDark?: boolean;
+  currentPath: string;
+}
+
+const { onDark = false, currentPath } = Astro.props;
+
+const isActive = (href: string) =>
+  href === '/' ? currentPath === '/' : currentPath.startsWith(href);
+---
+
+<header class:list={['site-header', onDark && 'site-header--on-dark']} data-header>
+  <div class="site-header__inner container-site">
+    <a href="/" class="site-header__brand" aria-label={`${site.name} — anasayfa`}>
+      <Brand onDark={onDark} />
+    </a>
+
+    <nav class="site-header__nav" aria-label="Ana menü">
+      <ul>
+        {
+          nav.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                class:list={['site-header__link', isActive(item.href) && 'is-active']}
+                aria-current={isActive(item.href) ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+
+    <div class="site-header__actions">
+      <a href={site.phone.href} class="site-header__phone" data-magnetic="0.12">
+        <Icon name="phone" size={17} />
+        <span class="site-header__phone-num">{site.phone.display}</span>
+      </a>
+
+      <button
+        type="button"
+        class="site-header__toggle"
+        aria-expanded="false"
+        aria-controls="mobil-menu"
+        data-menu-toggle
+      >
+        <span class="sr-only">Menüyü aç</span>
+        <Icon name="menu" size={24} />
+      </button>
+    </div>
+  </div>
+
+  <div class="site-header__hazard" aria-hidden="true"></div>
+</header>
+
+{/* Mobil tam ekran menü */}
+<div id="mobil-menu" class="mobile-menu on-ink" hidden data-menu-panel>
+  <div class="mobile-menu__top container-site">
+    <Brand onDark />
+    <button type="button" class="mobile-menu__close" data-menu-close>
+      <span class="sr-only">Menüyü kapat</span>
+      <Icon name="close" size={24} />
+    </button>
+  </div>
+
+  <nav class="mobile-menu__nav container-site" aria-label="Mobil menü">
+    <ul>
+      {
+        nav.map((item, i) => (
+          <li style={`--i:${i}`}>
+            <a href={item.href} aria-current={isActive(item.href) ? 'page' : undefined}>
+              <span class="mobile-menu__index">{String(i + 1).padStart(2, '0')}</span>
+              <span>{item.label}</span>
+              <Icon name="arrow-up-right" size={20} class="mobile-menu__arrow" />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </nav>
+
+  <div class="mobile-menu__foot container-site">
+    <a href={site.phone.href} class="btn btn--signal btn--block btn--lg">
+      <Icon name="phone" size={19} />
+      {site.phone.display}
+    </a>
+    <a
+      href={site.whatsapp.url}
+      class="btn btn--outline btn--block"
+      target="_blank"
+      rel="noopener"
+    >
+      <Icon name="whatsapp" size={19} />
+      WhatsApp’tan konum gönder
+    </a>
+    <p class="mobile-menu__note meta">{site.hoursLabel} · {site.areaLabel}</p>
+  </div>
+</div>
+
+<style>
+  .site-header {
+    position: fixed;
+    inset-block-start: 0;
+    inset-inline: 0;
+    z-index: var(--z-header);
+    background-color: color-mix(in srgb, var(--color-stone-1) 88%, transparent);
+    backdrop-filter: blur(14px) saturate(1.4);
+    -webkit-backdrop-filter: blur(14px) saturate(1.4);
+    border-block-end: 1px solid var(--color-stone-3);
+    transition:
+      background-color var(--duration-base) var(--ease-out-quart),
+      border-color var(--duration-base) var(--ease-out-quart);
+  }
+
+  /* Koyu hero üzerinde: şeffaf başla, scroll'da katılaş */
+  .site-header--on-dark {
+    background-color: transparent;
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border-block-end-color: transparent;
+    color: var(--color-ink-fg);
+  }
+
+  .site-header--on-dark.is-stuck {
+    background-color: color-mix(in srgb, var(--color-ink-900) 90%, transparent);
+    backdrop-filter: blur(14px) saturate(1.4);
+    -webkit-backdrop-filter: blur(14px) saturate(1.4);
+    border-block-end-color: rgb(239 241 236 / 0.14);
+  }
+
+  .site-header__inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    block-size: var(--header-h);
+  }
+
+  .site-header__brand {
+    text-decoration: none;
+    flex: none;
+  }
+
+  .site-header__hazard {
+    block-size: 3px;
+    background-image: var(--hazard-fine);
+    opacity: 0;
+    transition: opacity var(--duration-base) linear;
+  }
+
+  .site-header.is-stuck .site-header__hazard {
+    opacity: 1;
+  }
+
+  /* --- Masaüstü menü --- */
+  .site-header__nav {
+    display: none;
+  }
+
+  .site-header__nav ul {
+    display: flex;
+    align-items: center;
+    gap: clamp(0.5rem, 1.4vw, 1.4rem);
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .site-header__link {
+    position: relative;
+    display: inline-block;
+    padding-block: 0.55rem;
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    font-stretch: 92%;
+    text-decoration: none;
+    color: inherit;
+    white-space: nowrap;
+  }
+
+  .site-header__link::after {
+    content: '';
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline-start: 0;
+    inline-size: 0;
+    block-size: 2px;
+    background-color: var(--color-amber-500);
+    transition: inline-size var(--duration-base) var(--ease-out-quart);
+  }
+
+  .site-header__link:hover::after,
+  .site-header__link:focus-visible::after,
+  .site-header__link.is-active::after {
+    inline-size: 100%;
+  }
+
+  .site-header__link.is-active {
+    font-weight: 700;
+  }
+
+  /* --- Eylemler --- */
+  .site-header__actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex: none;
+  }
+
+  .site-header__phone {
+    display: none;
+    align-items: center;
+    gap: 0.5rem;
+    padding-block: 0.7rem;
+    padding-inline: 1.15rem;
+    min-block-size: 2.75rem;
+    border-radius: var(--radius-pill);
+    background-color: var(--color-amber-500);
+    color: var(--color-ink-900);
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    box-shadow: var(--shadow-sm);
+    transition: background-color var(--duration-base) var(--ease-out-quart);
+  }
+
+  .site-header__phone:hover {
+    background-color: var(--color-amber-400);
+  }
+
+  .site-header__toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 2.75rem;
+    block-size: 2.75rem;
+    border: 1px solid currentColor;
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+    transition: background-color var(--duration-fast) linear;
+  }
+
+  .site-header__toggle:hover {
+    background-color: color-mix(in srgb, currentColor 10%, transparent);
+  }
+
+  @media (min-width: 981px) {
+    .site-header__nav {
+      display: block;
+    }
+    .site-header__phone {
+      display: inline-flex;
+    }
+    .site-header__toggle {
+      display: none;
+    }
+  }
+
+  /* --- Mobil menü --- */
+  .mobile-menu {
+    position: fixed;
+    inset: 0;
+    z-index: var(--z-modal);
+    background-color: var(--color-ink-900);
+    color: var(--color-ink-fg);
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+    padding-block-end: max(1.5rem, env(safe-area-inset-bottom));
+  }
+
+  .mobile-menu[hidden] {
+    display: none;
+  }
+
+  .mobile-menu__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    block-size: var(--header-h);
+    flex: none;
+  }
+
+  .mobile-menu__close {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 2.75rem;
+    block-size: 2.75rem;
+    border: 1px solid rgb(239 241 236 / 0.35);
+    border-radius: var(--radius-pill);
+    background: transparent;
+    color: inherit;
+    cursor: pointer;
+  }
+
+  .mobile-menu__nav {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    padding-block: 1.5rem;
+  }
+
+  .mobile-menu__nav ul {
+    inline-size: 100%;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-block-start: 1px solid rgb(239 241 236 / 0.14);
+  }
+
+  .mobile-menu__nav li {
+    border-block-end: 1px solid rgb(239 241 236 / 0.14);
+  }
+
+  .mobile-menu__nav a {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding-block: 1.05rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 6vw, 2.1rem);
+    font-weight: 600;
+    font-stretch: 96%;
+    letter-spacing: -0.02em;
+    text-decoration: none;
+    color: var(--color-ink-fg);
+  }
+
+  .mobile-menu__nav a[aria-current='page'] {
+    color: var(--color-amber-400);
+  }
+
+  .mobile-menu__index {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    letter-spacing: 0.14em;
+    color: var(--color-amber-500);
+  }
+
+  .mobile-menu__arrow {
+    margin-inline-start: auto;
+    color: var(--color-ink-fg-muted);
+  }
+
+  .mobile-menu__foot {
+    flex: none;
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .mobile-menu__note {
+    text-align: center;
+    margin-block-start: 0.35rem;
+  }
+
+  /* Menü açıkken arka plan kaymasın */
+  :global(html.menu-open),
+  :global(html.menu-open body) {
+    overflow: hidden;
+  }
+</style>
+
+<script>
+  function initHeader() {
+    const header = document.querySelector<HTMLElement>('[data-header]');
+    const toggle = document.querySelector<HTMLButtonElement>('[data-menu-toggle]');
+    const panel = document.querySelector<HTMLElement>('[data-menu-panel]');
+    const closeBtn = document.querySelector<HTMLButtonElement>('[data-menu-close]');
+    if (!header || !toggle || !panel) return;
+
+    /* --- Yapışma durumu --- */
+    const onScroll = () => header.classList.toggle('is-stuck', window.scrollY > 24);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    /* --- Mobil menü + odak tuzağı --- */
+    let lastFocused: HTMLElement | null = null;
+
+    const focusables = () =>
+      Array.from(
+        panel.querySelectorAll<HTMLElement>('a[href], button:not([disabled])'),
+      ).filter((el) => el.offsetParent !== null);
+
+    const open = () => {
+      lastFocused = document.activeElement as HTMLElement;
+      panel.hidden = false;
+      document.documentElement.classList.add('menu-open');
+      toggle.setAttribute('aria-expanded', 'true');
+      focusables()[0]?.focus();
+    };
+
+    const close = () => {
+      panel.hidden = true;
+      document.documentElement.classList.remove('menu-open');
+      toggle.setAttribute('aria-expanded', 'false');
+      lastFocused?.focus();
+    };
+
+    toggle.addEventListener('click', open);
+    closeBtn?.addEventListener('click', close);
+    panel.querySelectorAll('a[href]').forEach((a) => a.addEventListener('click', close));
+
+    document.addEventListener('keydown', (e) => {
+      if (panel.hidden) return;
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        close();
+        return;
+      }
+      if (e.key !== 'Tab') return;
+      const items = focusables();
+      if (!items.length) return;
+      const first = items[0]!;
+      const last = items[items.length - 1]!;
+      if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    });
+
+    // Masaüstüne geçişte açık kalmış menüyü kapat
+    window.matchMedia('(min-width: 981px)').addEventListener('change', (ev) => {
+      if (ev.matches && !panel.hidden) close();
+    });
+  }
+
+  initHeader();
+  document.addEventListener('astro:page-load', initHeader);
+</script>

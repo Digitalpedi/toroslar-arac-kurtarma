@@ -1,0 +1,379 @@
+---
+import { getCollection, getEntry, render } from 'astro:content';
+import Base from '~/layouts/Base.astro';
+import PageHero from '~/components/PageHero.astro';
+import Figure from '~/components/Figure.astro';
+import Faq from '~/components/Faq.astro';
+import CtaBand from '~/components/CtaBand.astro';
+import Icon from '~/components/Icon.astro';
+import { site, districts } from '~/data/site';
+import { serviceNode, faqNode } from '~/lib/schema';
+
+export async function getStaticPaths() {
+  const items = await getCollection('hizmetler');
+  return items.map((item) => ({ params: { slug: item.id }, props: { item } }));
+}
+
+const { item } = Astro.props;
+const { Content } = await render(item);
+const d = item.data;
+const path = `/hizmetler/${item.id}/`;
+
+/* İlgili hizmetler — frontmatter'daki slug listesinden çözülür */
+const related = (
+  await Promise.all(d.related.map((slug) => getEntry('hizmetler', slug)))
+).filter((e) => e !== undefined);
+
+const breadcrumb = [
+  { name: 'Hizmetler', href: '/hizmetler/' },
+  { name: d.title, href: path },
+];
+
+const schema = [
+  serviceNode({
+    name: d.title,
+    description: d.description,
+    path,
+  }),
+  faqNode(d.faq),
+].filter((n) => n !== null);
+---
+
+<Base
+  title={d.metaTitle}
+  description={d.description}
+  path={path}
+  breadcrumb={breadcrumb}
+  schema={schema}
+  headerOnDark
+>
+  <PageHero kicker={d.kicker} title={d.title} lead={d.lead} breadcrumb={breadcrumb} watermark={String(d.order).padStart(2, '0')} />
+
+  {
+    d.image && (
+      <section class="svc-media">
+        <div class="container-site">
+          <div class="svc-media__frame" data-clip-reveal>
+            <Figure
+              name={d.image}
+              alt={d.imageAlt ?? d.title}
+              width={2400}
+              height={1350}
+              sizes="(min-width: 1200px) 1100px, 100vw"
+              loading="eager"
+              fetchpriority="high"
+              cover
+              imgClass="svc-media__img"
+            />
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+  <section class="section">
+    <div class="container-site svc-grid">
+      <div class="prose" data-reveal="up">
+        <Content />
+      </div>
+
+      <aside class="svc-side">
+        <div class="svc-box" data-reveal="up" data-reveal-delay="0.1">
+          <h2 class="svc-box__title">Bu hizmet neleri kapsar?</h2>
+          <ul class="svc-list">
+            {
+              d.covers.map((c) => (
+                <li>
+                  <Icon name="check" size={17} />
+                  <span>{c}</span>
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+
+        {
+          d.notCovered.length > 0 && (
+            <div class="svc-box svc-box--muted" data-reveal="up" data-reveal-delay="0.16">
+              <h2 class="svc-box__title">Kapsam dışında</h2>
+              <ul class="svc-list svc-list--out">
+                {d.notCovered.map((c) => (
+                  <li>
+                    <Icon name="close" size={16} />
+                    <span>{c}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+
+        <div class="svc-box svc-box--call" data-reveal="up" data-reveal-delay="0.22">
+          <p class="kicker">{site.hoursLabel}</p>
+          <p class="svc-box__lead">Konumunuzu gönderin, gerisini biz halledelim.</p>
+          <a href={site.phone.href} class="btn btn--signal btn--block">
+            <Icon name="phone" size={18} />
+            {site.phone.display}
+          </a>
+          <a
+            href={site.whatsapp.url}
+            class="btn btn--outline btn--block"
+            target="_blank"
+            rel="noopener"
+          >
+            <Icon name="whatsapp" size={18} />
+            WhatsApp
+          </a>
+        </div>
+      </aside>
+    </div>
+  </section>
+
+  <section class="section-sm band-stone-2">
+    <div class="container-site">
+      <p class="kicker">Hizmet bölgeleri</p>
+      <h2 class="areas-title">Bu hizmeti Mersin’in hangi ilçelerinde veriyoruz?</h2>
+      <ul class="areas-list" data-reveal-group>
+        {
+          districts.map((dist) => (
+            <li>
+              <a href={`/bolgeler/${dist.slug}/`} class="areas-chip">
+                <Icon name="map-pin" size={16} />
+                {dist.district}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  {
+    d.faq.length > 0 && (
+      <section class="section">
+        <div class="container-site faq-wrap">
+          <Faq items={d.faq} kicker="Sık sorulanlar" title={`${d.title} hakkında sorular`} />
+        </div>
+      </section>
+    )
+  }
+
+  {
+    related.length > 0 && (
+      <section class="section-sm">
+        <div class="container-site">
+          <p class="kicker">İlgili hizmetler</p>
+          <ul class="related" data-reveal-group>
+            {related.map((r) => (
+              <li>
+                <a href={`/hizmetler/${r.id}/`} class="card card--hazard related__card">
+                  <Icon name={r.data.icon} size={22} />
+                  <span class="related__title">{r.data.title}</span>
+                  <span class="related__sum">{r.data.summary}</span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+
+  <CtaBand />
+</Base>
+
+<style>
+  .svc-media {
+    padding-block-start: clamp(1.75rem, 4vw, 3rem);
+  }
+
+  .svc-media__frame {
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    aspect-ratio: 4 / 3;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .svc-media__frame :global(.svc-media__img) {
+    block-size: 100%;
+  }
+
+  .svc-grid {
+    display: grid;
+    gap: clamp(2.5rem, 5vw, 4rem);
+    align-items: start;
+  }
+
+  @media (min-width: 1000px) {
+    .svc-grid {
+      grid-template-columns: minmax(0, 1fr) minmax(19rem, 24rem);
+    }
+    .svc-side {
+      position: sticky;
+      inset-block-start: calc(var(--header-h) + 1.5rem);
+    }
+  }
+
+  .svc-side {
+    display: grid;
+    gap: 1rem;
+  }
+
+  .svc-box {
+    padding: clamp(1.25rem, 2.4vw, 1.75rem);
+    background-color: var(--color-stone-0);
+    border: 1px solid var(--color-stone-3);
+    border-radius: var(--radius-lg);
+  }
+
+  .svc-box--muted {
+    background-color: transparent;
+    border-style: dashed;
+  }
+
+  .svc-box--call {
+    background-color: var(--color-ink-900);
+    border-color: var(--color-ink-900);
+    display: grid;
+    gap: 0.65rem;
+  }
+
+  .svc-box--call .kicker {
+    color: var(--color-amber-400);
+  }
+
+  .svc-box__title {
+    font-size: 1.05rem;
+    letter-spacing: -0.01em;
+    margin-block-end: 1rem;
+  }
+
+  .svc-box--call .svc-box__lead {
+    color: var(--color-ink-fg-muted);
+    font-size: var(--text-small);
+    margin-block-end: 0.35rem;
+  }
+
+  .svc-list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 0.7rem;
+  }
+
+  .svc-list li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.6rem;
+    align-items: start;
+    font-size: var(--text-small);
+    line-height: 1.55;
+    color: var(--color-ink-600);
+  }
+
+  .svc-list :global(svg) {
+    margin-block-start: 0.15rem;
+    color: var(--color-verified);
+  }
+
+  .svc-list--out :global(svg) {
+    color: var(--color-ink-500);
+  }
+
+  .areas-title {
+    margin-block: 0.9rem 1.5rem;
+    font-size: var(--text-h3);
+  }
+
+  .areas-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .areas-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.65rem 1.05rem;
+    min-block-size: 2.75rem;
+    background-color: var(--color-stone-0);
+    border: 1px solid var(--color-stone-3);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-display);
+    font-size: 0.9375rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--color-ink-900);
+    transition:
+      background-color var(--duration-base) var(--ease-out-quart),
+      border-color var(--duration-base) var(--ease-out-quart);
+  }
+
+  .areas-chip:hover {
+    background-color: var(--color-ink-900);
+    border-color: var(--color-ink-900);
+    color: var(--color-stone-1);
+  }
+
+  .areas-chip :global(svg) {
+    color: var(--color-amber-600);
+  }
+
+  .areas-chip:hover :global(svg) {
+    color: var(--color-amber-500);
+  }
+
+  .faq-wrap {
+    max-inline-size: 60rem;
+  }
+
+  .related {
+    display: grid;
+    gap: 1rem;
+    margin: 1.5rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  @media (min-width: 760px) {
+    .related {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .related__card {
+    display: grid;
+    gap: 0.5rem;
+    padding: 1.35rem;
+    text-decoration: none;
+    overflow: hidden;
+  }
+
+  .related__card :global(svg) {
+    color: var(--color-amber-600);
+  }
+
+  .related__title {
+    font-family: var(--font-display);
+    font-size: 1.075rem;
+    font-weight: 600;
+    color: var(--color-ink-900);
+  }
+
+  .related__sum {
+    font-size: var(--text-small);
+    line-height: 1.55;
+    color: var(--color-ink-600);
+  }
+
+  @media (min-width: 700px) {
+    .svc-media__frame {
+      aspect-ratio: 16 / 9;
+    }
+  }
+</style>

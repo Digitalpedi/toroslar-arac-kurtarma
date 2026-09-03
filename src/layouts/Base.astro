@@ -1,0 +1,137 @@
+---
+import '@fontsource-variable/bricolage-grotesque/wdth.css';
+import '@fontsource-variable/ibm-plex-sans/wght.css';
+import '@fontsource/ibm-plex-mono/500.css';
+import '~/styles/global.css';
+
+import bricolageLatin from '@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-wdth-normal.woff2?url';
+import bricolageLatinExt from '@fontsource-variable/bricolage-grotesque/files/bricolage-grotesque-latin-ext-wdth-normal.woff2?url';
+import plexLatin from '@fontsource-variable/ibm-plex-sans/files/ibm-plex-sans-latin-wght-normal.woff2?url';
+import plexLatinExt from '@fontsource-variable/ibm-plex-sans/files/ibm-plex-sans-latin-ext-wght-normal.woff2?url';
+
+import Header from '~/components/Header.astro';
+import Footer from '~/components/Footer.astro';
+import MobileContactBar from '~/components/MobileContactBar.astro';
+import { site } from '~/data/site';
+import { buildGraph, organizationNode, websiteNode, breadcrumbNode } from '~/lib/schema';
+
+interface Props {
+  title: string;
+  description: string;
+  /** Kök-göreli yol, sondaki eğik çizgi dâhil. Örn: '/hizmetler/' */
+  path: string;
+  /** Ek JSON-LD düğümleri (Service, FAQPage, Article...) */
+  schema?: Record<string, unknown>[];
+  breadcrumb?: { name: string; href: string }[];
+  ogImage?: string;
+  noindex?: boolean;
+  /** Hero koyu zeminle başlıyorsa header açık varyantla açılır */
+  headerOnDark?: boolean;
+}
+
+const {
+  title,
+  description,
+  path,
+  schema = [],
+  breadcrumb = [],
+  ogImage = '/og/toroslar-arac-kurtarma.png',
+  noindex = false,
+  headerOnDark = false,
+} = Astro.props;
+
+const canonical = new URL(path, site.url).href;
+const ogUrl = new URL(ogImage, site.url).href;
+
+const graph = buildGraph(
+  organizationNode(),
+  websiteNode(),
+  breadcrumbNode([{ name: 'Anasayfa', href: '/' }, ...breadcrumb]),
+  ...schema,
+);
+---
+
+<!doctype html>
+<html lang="tr" prefix="og: https://ogp.me/ns#">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    {noindex && <meta name="robots" content="noindex, nofollow" />}
+    {
+      !noindex && (
+        <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+      )
+    }
+
+    {/* Kritik fontlar — ilk boyamada başlık ve gövde hazır olsun */}
+    <link rel="preload" as="font" type="font/woff2" href={bricolageLatin} crossorigin="anonymous" />
+    <link
+      rel="preload"
+      as="font"
+      type="font/woff2"
+      href={bricolageLatinExt}
+      crossorigin="anonymous"
+    />
+    <link rel="preload" as="font" type="font/woff2" href={plexLatin} crossorigin="anonymous" />
+    <link rel="preload" as="font" type="font/woff2" href={plexLatinExt} crossorigin="anonymous" />
+
+    <meta name="theme-color" content="#eff1ec" />
+    <meta name="format-detection" content="telephone=yes" />
+    <meta name="author" content={site.name} />
+    <meta name="geo.region" content="TR-33" />
+    <meta name="geo.placename" content="Mersin" />
+
+    {/* Open Graph */}
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:locale" content="tr_TR" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={ogUrl} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={`${site.name} — ${site.tagline}`} />
+
+    {/* Twitter */}
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogUrl} />
+
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" href="/sitemap-index.xml" />
+
+    <script type="application/ld+json" is:inline set:html={JSON.stringify(graph)} />
+  </head>
+
+  <body>
+    <a
+      href="#icerik"
+      class="sr-only-focusable btn btn--signal btn--sm"
+      style="position:fixed;inset-block-start:1rem;inset-inline-start:1rem;z-index:100"
+    >
+      İçeriğe geç
+    </a>
+
+    <Header onDark={headerOnDark} currentPath={path} />
+
+    <main id="icerik">
+      <slot />
+    </main>
+
+    <Footer />
+    <MobileContactBar />
+
+    <script>
+      import { initMotion } from '~/lib/motion';
+      initMotion();
+    </script>
+  </body>
+</html>

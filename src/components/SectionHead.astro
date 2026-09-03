@@ -1,0 +1,50 @@
+---
+interface Props {
+  kicker?: string;
+  title: string;
+  lead?: string;
+  /** h2 varsayılan; sayfada tek başlıksa h1 verilebilir */
+  as?: 'h1' | 'h2' | 'h3';
+  align?: 'start' | 'center';
+  class?: string;
+}
+
+const { kicker, title, lead, as: Tag = 'h2', align = 'start', class: className = '' } = Astro.props;
+---
+
+<div class:list={['sec-head', `sec-head--${align}`, className]} data-reveal="up">
+  {kicker && <p class="kicker">{kicker}</p>}
+  <Tag class="sec-head__title">{title}</Tag>
+  {lead && <p class="sec-head__lead">{lead}</p>}
+</div>
+
+<style>
+  .sec-head {
+    display: grid;
+    gap: 1rem;
+    max-inline-size: 46rem;
+  }
+
+  .sec-head--center {
+    margin-inline: auto;
+    justify-items: center;
+    text-align: center;
+  }
+
+  .sec-head__title {
+    font-size: var(--text-h2);
+    line-height: var(--text-h2--line-height);
+    letter-spacing: var(--text-h2--letter-spacing);
+  }
+
+  .sec-head__lead {
+    font-size: var(--text-lead);
+    line-height: var(--text-lead--line-height);
+    color: var(--color-ink-600);
+    max-inline-size: 42rem;
+  }
+
+  :global(.band-ink) .sec-head__lead {
+    color: var(--color-ink-fg-muted);
+  }
+</style>

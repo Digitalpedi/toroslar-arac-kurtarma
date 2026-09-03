@@ -1,0 +1,154 @@
+---
+import Base from '~/layouts/Base.astro';
+import Icon from '~/components/Icon.astro';
+import { site, nav } from '~/data/site';
+---
+
+<Base
+  title="Sayfa bulunamadı | Toroslar Araç Kurtarma"
+  description="Aradığınız sayfa bulunamadı. Mersin şehir içi 7/24 çekici için doğrudan arayabilirsiniz."
+  path="/404/"
+  noindex
+  headerOnDark
+>
+  <section class="nf band-ink">
+    <div class="container-site nf__inner">
+      <p class="nf__code" aria-hidden="true">404</p>
+      <p class="kicker">Yanlış çıkış</p>
+      <h1 class="nf__title">Bu sayfa haritada yok</h1>
+      <p class="nf__lead">
+        Aradığınız adres taşınmış ya da hiç var olmamış olabilir. Ama aracınız hâlâ yolda
+        kaldıysa bunun bir önemi yok — doğrudan arayın.
+      </p>
+
+      <div class="nf__actions">
+        <a href={site.phone.href} class="btn btn--signal btn--lg">
+          <Icon name="phone" size={20} />
+          {site.phone.display}
+        </a>
+        <a href="/" class="btn btn--outline btn--lg">
+          <Icon name="arrow-right" size={19} />
+          Anasayfa
+        </a>
+      </div>
+
+      <nav class="nf__nav" aria-label="Site bölümleri">
+        <p class="meta">Buradan devam edin</p>
+        <ul>
+          {
+            nav.map((item) => (
+              <li>
+                <a href={item.href}>
+                  {item.label}
+                  <Icon name="arrow-up-right" size={14} />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+
+    <div class="hazard-bar" aria-hidden="true"></div>
+  </section>
+</Base>
+
+<style>
+  .nf {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-block-size: 100svh;
+    padding-block-start: var(--header-h);
+    overflow: hidden;
+  }
+
+  .nf__inner {
+    position: relative;
+    padding-block: clamp(3rem, 8vw, 6rem);
+    max-inline-size: 46rem;
+  }
+
+  .nf__code {
+    position: absolute;
+    inset-block-start: -0.12em;
+    inset-inline-end: 0;
+    font-family: var(--font-display);
+    font-size: clamp(9rem, 34vw, 26rem);
+    font-weight: 800;
+    line-height: 0.78;
+    letter-spacing: -0.06em;
+    color: rgb(239 241 236 / 0.05);
+    pointer-events: none;
+    user-select: none;
+  }
+
+  .nf__title {
+    margin-block-start: 0.9rem;
+    font-size: var(--text-display);
+    line-height: var(--text-display--line-height);
+    letter-spacing: var(--text-display--letter-spacing);
+    font-weight: 800;
+  }
+
+  .nf__lead {
+    margin-block-start: 1.25rem;
+    max-inline-size: 46ch;
+    font-size: var(--text-lead);
+    line-height: var(--text-lead--line-height);
+    color: var(--color-ink-fg-muted);
+  }
+
+  .nf__actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+    margin-block-start: 2rem;
+  }
+
+  .nf__nav {
+    margin-block-start: clamp(2.5rem, 5vw, 3.5rem);
+    padding-block-start: 1.75rem;
+    border-block-start: 1px solid rgb(239 241 236 / 0.16);
+  }
+
+  .nf__nav ul {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 1rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .nf__nav a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.5rem 0.95rem;
+    border: 1px solid rgb(239 241 236 / 0.28);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+    color: var(--color-ink-fg);
+    transition:
+      background-color var(--duration-fast) linear,
+      border-color var(--duration-fast) linear,
+      color var(--duration-fast) linear;
+  }
+
+  .nf__nav a:hover {
+    background-color: var(--color-amber-500);
+    border-color: var(--color-amber-500);
+    color: var(--color-ink-900);
+  }
+
+  .hazard-bar {
+    position: absolute;
+    inset-block-end: 0;
+    inset-inline: 0;
+  }
+</style>

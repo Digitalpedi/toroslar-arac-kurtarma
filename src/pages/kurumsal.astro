@@ -1,0 +1,339 @@
+---
+import Base from '~/layouts/Base.astro';
+import PageHero from '~/components/PageHero.astro';
+import Figure from '~/components/Figure.astro';
+import CtaBand from '~/components/CtaBand.astro';
+import Icon from '~/components/Icon.astro';
+import { site, districts } from '~/data/site';
+
+const path = '/kurumsal/';
+const breadcrumb = [{ name: 'Kurumsal', href: path }];
+
+const principles = [
+  {
+    icon: 'shield' as const,
+    title: 'Aracınıza dokunan her el hesap verir',
+    text: 'Yükleme öncesi mevcut çizik ve ezikler birlikte görülür. Teslimde tartışma çıkmaz, çünkü baştan konuşulmuştur.',
+  },
+  {
+    icon: 'clock' as const,
+    title: 'Süreyi olduğu gibi söyleriz',
+    text: 'Trafiğe, konuma ve ekibin nerede olduğuna göre gerçekçi bir süre veririz. “Beş dakikada oradayım” demek kolay, tutmak başka.',
+  },
+  {
+    icon: 'route' as const,
+    title: 'Dar alanda çalışırız, geniş alanda değil',
+    text: 'Şehirlerarası iş almıyoruz. Bir çekici şehirden çıktığında saatlerce yok olur; o saatlerde şehirde yolda kalan sürücü bekleyemez.',
+  },
+  {
+    icon: 'alert' as const,
+    title: 'Yapmadığımız işi “yaparız” demeyiz',
+    text: 'Ağır vasıta taşımıyoruz, yol yardımı vermiyoruz, araç onarmıyoruz. Sınırı baştan çizmek sizin zamanınızı korur.',
+  },
+];
+---
+
+<Base
+  title="Kurumsal | Toroslar Araç Kurtarma — Mersin Oto Çekici"
+  description="Mersin şehir içinde binek ve hafif ticari araçlar için 7/24 çekici. Nasıl çalıştığımız, neyi yapıp neyi yapmadığımız ve hangi ilkelerle iş gördüğümüz."
+  path={path}
+  breadcrumb={breadcrumb}
+  headerOnDark
+>
+  <PageHero
+    kicker="Kurumsal"
+    title="Adımızı bir ilçeden aldık"
+    lead="Toroslar Araç Kurtarma, Mersin şehir içinde binek ve hafif ticari araçlara çekici ve kurtarma hizmeti verir. Tek numara, tek iş, tek şehir."
+    breadcrumb={breadcrumb}
+    watermark="33"
+  />
+
+  <section class="section">
+    <div class="container-site about">
+      <div class="about__media" data-clip-reveal>
+        <Figure
+          name="kurumsal-cekici"
+          alt="Şehir içinde çalışan kayar kasa çekici, akşam ışığında"
+          width={1800}
+          height={2100}
+          sizes="(min-width: 980px) 42vw, 100vw"
+          cover
+          imgClass="about__img"
+        />
+      </div>
+
+      <div class="about__copy prose" data-reveal="up">
+        <h2>Neden sadece çekici?</h2>
+        <p>
+          Bir işletmenin her şeyi yapabildiğini söylemesi, hiçbirini iyi yapmadığının işareti
+          olur çoğu zaman. Biz tek bir işi seçtik: <strong>hareket edemeyen bir aracı,
+          bulunduğu yerden alıp sizin söylediğiniz adrese sağlam teslim etmek.</strong>
+        </p>
+        <p>
+          Bunun dışında kalan her şey — akü takviyesi, lastik değişimi, yerinde onarım, ağır
+          vasıta taşıma — bizim işimiz değil. Bunu web sitesinde yazmak alışılmış bir şey
+          değil ama sizin için daha yararlı: yanlış numarayı arayıp zaman kaybetmezsiniz.
+        </p>
+
+        <h2>Neden sadece Mersin şehir içi?</h2>
+        <p>
+          Çünkü hızın kaynağı yakın olmaktır. Şehirlerarası bir işe çıkan çekici saatlerce
+          şehirden uzakta kalır. Aynı saatlerde bulvarda yolda kalmış bir sürücü, o çekiciyi
+          bekleyemez.
+        </p>
+        <p>
+          İkinci bir sebep daha var: aynı sokaklarda çalışmak o sokakları öğretiyor. Hangi
+          otoparkın rampası dik, hangi sokak tek yön, hangi bulvarda hangi saatte durulmaz,
+          hangi mahallede çekici manevra yapamaz — bunlar haritadan öğrenilmiyor.
+        </p>
+
+        <h2>Ekipman: kayar kasa</h2>
+        <p>
+          Aracı sürükleyerek çekmek hızlıdır ama araca yük bindirir. Kayar kasa çekicide kasa
+          hidrolik olarak arkaya kayar, zeminle rampa oluşturur ve araç vinçle bu rampadan
+          platforma alınır. Dört tekerlek de yerden kesilir.
+        </p>
+        <p>
+          Bu, otomatik şanzımanlı, CVT’li, dört tekerden çekişli ve elektrikli araçlarda
+          tercih değil zorunluluktur. Bağlama lastik üzerinden yapılır — kayışlar boyalı
+          yüzeye ve şasiye temas etmez.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section band-ink" data-scene>
+    <div class="container-site">
+      <p class="kicker" data-reveal="up">Nasıl çalışıyoruz</p>
+      <h2 class="principles__title" data-reveal="up" data-reveal-delay="0.06">
+        Dört ilke, dördü de test edilebilir
+      </h2>
+
+      <ul class="principles" data-reveal-group data-reveal-stagger="0.09">
+        {
+          principles.map((p, i) => (
+            <li class="principle">
+              <span class="principle__num meta">{String(i + 1).padStart(2, '0')}</span>
+              <span class="principle__icon">
+                <Icon name={p.icon} size={22} />
+              </span>
+              <h3 class="principle__title">{p.title}</h3>
+              <p class="principle__text">{p.text}</p>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-site facts">
+      <div data-reveal="up">
+        <p class="kicker">Künye</p>
+        <h2 class="facts__title">Bilmeniz gereken her şey</h2>
+      </div>
+
+      <dl class="facts__list" data-reveal-group data-reveal-stagger="0.06">
+        <div>
+          <dt>İşletme</dt>
+          <dd>{site.name}</dd>
+        </div>
+        <div>
+          <dt>Telefon</dt>
+          <dd><a href={site.phone.href} class="facts__phone">{site.phone.display}</a></dd>
+        </div>
+        <div>
+          <dt>Çalışma saatleri</dt>
+          <dd>{site.hoursLabel} — {site.hoursNote}</dd>
+        </div>
+        <div>
+          <dt>Hizmet bölgesi</dt>
+          <dd>Mersin şehir içi — {districts.map((d) => d.district).join(', ')}</dd>
+        </div>
+        <div>
+          <dt>Araç sınıfı</dt>
+          <dd>Binek otomobil, panelvan, kamyonet, minibüs, pick-up</dd>
+        </div>
+        <div>
+          <dt>Ekipman</dt>
+          <dd>Kayar kasa (platformlu) çekici, vinç, kaydırma takozu, makara düzeneği</dd>
+        </div>
+        <div>
+          <dt>Ofis</dt>
+          <dd>
+            Sabit ofis yok — mobil hizmet veriyoruz. Aracınız neredeyse buluşma noktası
+            orası.
+          </dd>
+        </div>
+      </dl>
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .about {
+    display: grid;
+    gap: clamp(2.25rem, 5vw, 3.75rem);
+    align-items: start;
+  }
+
+  @media (min-width: 980px) {
+    .about {
+      grid-template-columns: minmax(0, 0.8fr) minmax(0, 1fr);
+    }
+    .about__media {
+      position: sticky;
+      inset-block-start: calc(var(--header-h) + 2rem);
+    }
+  }
+
+  .about__media {
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    aspect-ratio: 6 / 7;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .about__media :global(.about__img) {
+    block-size: 100%;
+  }
+
+  .about__copy > :global(h2:first-child) {
+    margin-block-start: 0;
+  }
+
+  .principles__title {
+    margin-block-start: 0.9rem;
+    font-size: var(--text-h2);
+    line-height: var(--text-h2--line-height);
+    letter-spacing: var(--text-h2--letter-spacing);
+    max-inline-size: 22ch;
+  }
+
+  .principles {
+    display: grid;
+    gap: 1px;
+    margin: clamp(2.25rem, 4vw, 3rem) 0 0;
+    padding: 0;
+    list-style: none;
+    background-color: rgb(239 241 236 / 0.16);
+    border: 1px solid rgb(239 241 236 / 0.16);
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+  }
+
+  @media (min-width: 760px) {
+    .principles {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .principle {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 0.9rem;
+    row-gap: 0.5rem;
+    padding: clamp(1.35rem, 2.6vw, 2rem);
+    background-color: var(--color-ink-900);
+  }
+
+  .principle__num {
+    grid-row: 1;
+    align-self: center;
+    color: var(--color-amber-500);
+  }
+
+  .principle__icon {
+    grid-row: 1;
+    grid-column: 2;
+    justify-self: end;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 2.5rem;
+    block-size: 2.5rem;
+    border: 1px solid rgb(239 241 236 / 0.18);
+    border-radius: var(--radius-md);
+    color: var(--color-amber-400);
+  }
+
+  .principle__title {
+    grid-column: 1 / -1;
+    margin-block-start: 0.75rem;
+    font-size: 1.15rem;
+    line-height: 1.25;
+    letter-spacing: -0.015em;
+  }
+
+  .principle__text {
+    grid-column: 1 / -1;
+    font-size: var(--text-small);
+    line-height: 1.62;
+    color: var(--color-ink-fg-muted);
+  }
+
+  .facts {
+    display: grid;
+    gap: clamp(1.75rem, 4vw, 3rem);
+  }
+
+  @media (min-width: 900px) {
+    .facts {
+      grid-template-columns: minmax(0, 18rem) 1fr;
+    }
+  }
+
+  .facts__title {
+    margin-block-start: 0.9rem;
+    font-size: var(--text-h2);
+    line-height: var(--text-h2--line-height);
+    letter-spacing: var(--text-h2--letter-spacing);
+  }
+
+  .facts__list {
+    margin: 0;
+    display: grid;
+    gap: 0;
+    border-block-start: 1px solid var(--color-stone-3);
+  }
+
+  .facts__list > div {
+    display: grid;
+    gap: 0.35rem;
+    padding-block: 1.15rem;
+    border-block-end: 1px solid var(--color-stone-3);
+  }
+
+  @media (min-width: 640px) {
+    .facts__list > div {
+      grid-template-columns: minmax(0, 13rem) 1fr;
+      gap: 1.5rem;
+      align-items: baseline;
+    }
+  }
+
+  .facts__list dt {
+    font-family: var(--font-display);
+    font-size: var(--text-label);
+    font-stretch: 80%;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-ink-500);
+  }
+
+  .facts__list dd {
+    margin: 0;
+    color: var(--color-ink-700);
+  }
+
+  .facts__phone {
+    font-family: var(--font-mono);
+    font-size: 1.075rem;
+    color: var(--color-ink-900);
+    text-decoration: none;
+    border-block-end: 2px solid var(--color-amber-500);
+  }
+</style>

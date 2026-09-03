@@ -1,0 +1,41 @@
+# Astro
+dist/
+.astro/
+
+# Bağımlılıklar
+node_modules/
+
+# İşletim sistemi
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Ortam
+.env
+.env.production
+.env.local
+
+# Düzenleyici
+.vscode/*
+!.vscode/extensions.json
+.idea/
+
+# Günlükler
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Wrangler
+.wrangler/
+
+# Yedekler
+_yedek-*/
+
+# Doğrulama çıktıları
+.qa/
+
+# Ham görsel kaynakları — `npm run media:fetch` ile yeniden indirilir.
+# Pexels kimlikleri scripts/fetch-media.mjs içinde kayıtlı.
+# Üretilmiş varyantlar (public/media) repoda tutulur; deploy onları kullanır.
+media-src/

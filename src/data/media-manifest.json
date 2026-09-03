@@ -1,0 +1,90 @@
+{
+  "bolge-akdeniz": {
+    "width": 4800,
+    "height": 3191
+  },
+  "bolge-mezitli": {
+    "width": 2500,
+    "height": 1667
+  },
+  "bolge-toroslar": {
+    "width": 4800,
+    "height": 3200
+  },
+  "bolge-yenisehir": {
+    "width": 4800,
+    "height": 3200
+  },
+  "hero-cekici": {
+    "width": 3312,
+    "height": 2304
+  },
+  "hizmet-arizali-arac": {
+    "width": 4000,
+    "height": 2667
+  },
+  "hizmet-hafif-ticari": {
+    "width": 4160,
+    "height": 2773
+  },
+  "hizmet-kaza-kurtarma": {
+    "width": 4050,
+    "height": 2700
+  },
+  "hizmet-oto-cekici": {
+    "width": 4000,
+    "height": 2667
+  },
+  "hizmet-otopark-kurtarma": {
+    "width": 4800,
+    "height": 3200
+  },
+  "hizmet-sehir-ici-nakli": {
+    "width": 3072,
+    "height": 2048
+  },
+  "kayar-kasa": {
+    "width": 2560,
+    "height": 3200
+  },
+  "kurumsal-cekici": {
+    "width": 3945,
+    "height": 4603
+  },
+  "rehber-cekici-kurtarma": {
+    "width": 4800,
+    "height": 3200
+  },
+  "rehber-elektrikli-arac": {
+    "width": 3888,
+    "height": 2592
+  },
+  "rehber-kaza-tutanak": {
+    "width": 3600,
+    "height": 2400
+  },
+  "rehber-otomatik-vites": {
+    "width": 3904,
+    "height": 2603
+  },
+  "rehber-otopark": {
+    "width": 4000,
+    "height": 2667
+  },
+  "rehber-ucret": {
+    "width": 4800,
+    "height": 3200
+  },
+  "rehber-uyari-lambasi": {
+    "width": 2832,
+    "height": 1888
+  },
+  "rehber-yol-guvenligi": {
+    "width": 4016,
+    "height": 2677
+  },
+  "rehber-yolda-kalma": {
+    "width": 4800,
+    "height": 3191
+  }
+}

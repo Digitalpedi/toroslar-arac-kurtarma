@@ -1,0 +1,86 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  trail: { name: string; href: string }[];
+  /** Koyu zemin üzerinde mi */
+  onDark?: boolean;
+}
+
+const { trail, onDark = false } = Astro.props;
+const items = [{ name: 'Anasayfa', href: '/' }, ...trail];
+---
+
+<nav class:list={['crumbs', onDark && 'crumbs--dark']} aria-label="Site haritası">
+  <ol>
+    {
+      items.map((c, i) => (
+        <li>
+          {i < items.length - 1 ? (
+            <>
+              <a href={c.href}>{c.name}</a>
+              <Icon name="chevron-right" size={13} class="crumbs__sep" />
+            </>
+          ) : (
+            <span aria-current="page">{c.name}</span>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>
+
+<style>
+  .crumbs ol {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.4rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .crumbs li {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .crumbs {
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-ink-500);
+  }
+
+  .crumbs--dark {
+    color: var(--color-ink-fg-muted);
+  }
+
+  .crumbs a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .crumbs a:hover {
+    color: var(--color-amber-700);
+  }
+
+  .crumbs--dark a:hover {
+    color: var(--color-amber-400);
+  }
+
+  .crumbs [aria-current='page'] {
+    color: var(--color-ink-900);
+  }
+
+  .crumbs--dark [aria-current='page'] {
+    color: var(--color-amber-400);
+  }
+
+  .crumbs__sep {
+    opacity: 0.55;
+  }
+</style>

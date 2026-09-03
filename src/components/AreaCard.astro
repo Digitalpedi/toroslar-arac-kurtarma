@@ -1,0 +1,78 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  href: string;
+  district: string;
+  short: string;
+  /** Kartın sağ üstünde duran kısa kod — 33 + ilçe baş harfi hissi */
+  code?: string;
+  /** Başlık seviyesi — hub sayfalarında h1'den sonra h2 gelmeli */
+  as?: 'h2' | 'h3';
+}
+
+const { href, district, short, code, as: Heading = 'h3' } = Astro.props;
+---
+
+<a href={href} class="card card--hazard area">
+  <span class="area__head">
+    <Icon name="map-pin" size={20} />
+    {code && <span class="area__code meta">{code}</span>}
+  </span>
+  <Heading class="area__title">{district}</Heading>
+  <p class="area__short">{short}</p>
+  <span class="area__more">
+    Bölge sayfası
+    <Icon name="arrow-up-right" size={15} />
+  </span>
+</a>
+
+<style>
+  .area {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: clamp(1.25rem, 2.2vw, 1.7rem);
+    text-decoration: none;
+    overflow: hidden;
+  }
+
+  .area__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    color: var(--color-amber-700);
+  }
+
+  .area__title {
+    font-size: var(--text-h3);
+    line-height: var(--text-h3--line-height);
+    letter-spacing: var(--text-h3--letter-spacing);
+  }
+
+  .area__short {
+    flex: 1 1 auto;
+    color: var(--color-ink-600);
+    font-size: var(--text-small);
+    line-height: 1.6;
+  }
+
+  .area__more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-display);
+    font-size: 0.8125rem;
+    font-weight: 600;
+    font-stretch: 88%;
+    color: var(--color-ink-900);
+  }
+
+  .area__more :global(svg) {
+    transition: transform var(--duration-base) var(--ease-out-quart);
+  }
+
+  .area:hover .area__more :global(svg) {
+    transform: translate(2px, -2px);
+  }
+</style>

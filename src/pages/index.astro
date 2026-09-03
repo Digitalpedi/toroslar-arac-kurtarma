@@ -1,0 +1,532 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '~/layouts/Base.astro';
+import Hero from '~/components/Hero.astro';
+import Marquee from '~/components/Marquee.astro';
+import SectionHead from '~/components/SectionHead.astro';
+import ServiceCard from '~/components/ServiceCard.astro';
+import AreaCard from '~/components/AreaCard.astro';
+import Sequence from '~/components/Sequence.astro';
+import Figure from '~/components/Figure.astro';
+import Faq from '~/components/Faq.astro';
+import CtaBand from '~/components/CtaBand.astro';
+import Icon from '~/components/Icon.astro';
+import { site, districts, localSpots } from '~/data/site';
+import { serviceNode, faqNode, howToNode } from '~/lib/schema';
+
+const services = (await getCollection('hizmetler')).sort((a, b) => a.data.order - b.data.order);
+
+const posts = (await getCollection('rehber'))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .slice(0, 3);
+
+const steps = [
+  {
+    title: 'Ararsınız, konum gönderirsiniz',
+    text: 'Adres tarif etmenize gerek yok. WhatsApp’tan canlı konum atın; aracın markası, vites tipi ve durumu da lazım olacak.',
+    icon: 'headset' as const,
+    meta: 'Telefon 7/24 açık',
+  },
+  {
+    title: 'Doğru ekipmanla yola çıkarız',
+    text: 'Araç serbest mi, bir yere mi sıkışmış — bu tek bilgi gönderilecek ekipmanı belirler. Alçak gövde, kilitli direksiyon ve dönmeyen tekerlek için hazırlık yolda yapılır.',
+    icon: 'truck' as const,
+    meta: 'Kayar kasa çekici',
+  },
+  {
+    title: 'Aracınız platforma alınır',
+    text: 'Dört tekerlek de yerden kesilir, bağlama lastik üzerinden yapılır. Mevcut çizik ve ezikler yükleme öncesi birlikte görülür.',
+    icon: 'shield' as const,
+    meta: 'Şanzıman hiç dönmez',
+  },
+  {
+    title: 'Söylediğiniz adrese teslim edilir',
+    text: 'Servis, boyahane, eksper otoparkı ya da eviniz. Teslim noktası kapalıysa aracın nereye bırakılacağı ve anahtarın kimde kalacağı önceden konuşulur.',
+    icon: 'check' as const,
+    meta: 'Teslim teyit edilir',
+  },
+];
+
+const faq = [
+  {
+    q: 'Mersin’in hangi bölgelerine geliyorsunuz?',
+    a: 'Mersin şehir içi: Toroslar, Yenişehir, Mezitli ve Akdeniz ilçelerinin tamamı. Şehirlerarası taşıma yapmıyoruz — işimizi şehir merkeziyle sınırlı tutmamızın sebebi hızlı olabilmek.',
+  },
+  {
+    q: 'Gece ve hafta sonu da geliyor musunuz?',
+    a: '7/24 kesintisiz. Gece, hafta sonu ve resmî tatiller dâhil telefon her saat açık.',
+  },
+  {
+    q: 'Hangi araçları taşıyorsunuz?',
+    a: 'Binek otomobiller ve hafif ticari araçlar: panelvan, kamyonet, minibüs ve pick-up. Kamyon, tır, otobüs gibi ağır vasıtaları ve iş makinelerini taşımıyoruz.',
+  },
+  {
+    q: 'Akü takviyesi veya lastik değişimi yapıyor musunuz?',
+    a: 'Hayır. Yerinde yol yardımı hizmeti vermiyoruz. İşimiz aracı bulunduğu yerden alıp istediğiniz adrese taşımak.',
+  },
+  {
+    q: 'Otomatik vitesli aracım güvenle taşınır mı?',
+    a: 'Evet. Kayar kasa çekicide dört tekerlek de yerden kesilir; şanzıman hiç dönmez. Otomatik, CVT, 4x4 ve elektrikli araçlar için doğru yöntem budur.',
+  },
+  {
+    q: 'Ne kadar sürede gelirsiniz?',
+    a: 'Süre; konumunuza, o anki trafiğe ve ekibin bulunduğu yere bağlı. Telefonda size gerçekçi bir süre söyleriz — olmayacak bir rakam vermeyiz.',
+  },
+];
+
+const path = '/';
+
+const schema = [
+  serviceNode({
+    name: 'Mersin şehir içi oto çekici ve araç kurtarma',
+    description:
+      'Binek ve hafif ticari araçlar için 7/24 çekici ve kurtarma. Kayar kasa çekici ile kaza, arıza, dar alan kurtarma ve planlı nakil.',
+    path,
+  }),
+  howToNode({
+    name: 'Çekici nasıl çağrılır?',
+    description: 'Mersin şehir içinde çekici çağırma süreci — çağrıdan teslimata dört adım.',
+    path,
+    steps: steps.map((s) => ({ name: s.title, text: s.text })),
+  }),
+  faqNode(faq),
+].filter((n) => n !== null);
+---
+
+<Base
+  title="Toroslar Araç Kurtarma | Mersin 7/24 Oto Çekici ve Araç Kurtarma"
+  description="Mersin şehir içinde 7/24 oto çekici. Binek ve hafif ticari araçlar için kayar kasa çekici ile kaza, arıza ve dar alan kurtarma. Konum gönderin, gelelim."
+  path={path}
+  schema={schema}
+  headerOnDark
+>
+  <Hero />
+
+  <Marquee items={localSpots} speed={0.4} tone="ink" />
+
+  {/* --- HİZMETLER --- */}
+  <section class="section" id="hizmetler">
+    <div class="container-site">
+      <SectionHead
+        kicker="Ne yapıyoruz"
+        title="Aynı çekici değil — altı farklı iş"
+        lead="Aracın nerede olduğu, nasıl durduğu ve nereye gideceği işi baştan değiştirir. Doğru sayfayı seçin, ne yapacağımızı önceden bilin."
+      />
+
+      <ul class="svc-grid" data-reveal-group data-reveal-stagger="0.07">
+        {
+          services.map((item) => (
+            <li>
+              <ServiceCard
+                href={`/hizmetler/${item.id}/`}
+                title={item.data.title}
+                summary={item.data.summary}
+                icon={item.data.icon}
+                index={item.data.order}
+              />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  {/* --- ÇAĞRIDAN TESLİMATA --- */}
+  <Sequence kicker="Nasıl çalışır" title="Çağrıdan teslimata dört adım" steps={steps} />
+
+  {/* --- KAYAR KASA --- */}
+  <section class="section" data-scene>
+    <div class="container-site flatbed">
+      <div class="flatbed__media" data-reveal="left">
+        <div class="flatbed__frame">
+          <Figure
+            name="kayar-kasa"
+            alt="Kayar kasa çekicinin platformu zemine indirilmiş, araç rampadan yükleniyor"
+            width={1800}
+            height={2200}
+            sizes="(min-width: 980px) 44vw, 100vw"
+            cover
+            imgClass="flatbed__img"
+          />
+        </div>
+        <span class="flatbed__badge">
+          <span class="flatbed__badge-num" data-count="4" data-count-suffix="">0</span>
+          <span class="flatbed__badge-label">tekerlek<br />yerden kesilir</span>
+        </span>
+      </div>
+
+      <div class="flatbed__copy">
+        <p class="kicker" data-reveal="up">Ekipman</p>
+        <h2 class="flatbed__title" data-reveal="up" data-reveal-delay="0.06">
+          Neden her araç kayar kasaya çıkar?
+        </h2>
+        <p class="flatbed__lead" data-word-light>
+          Otomatik şanzımanda yağ pompası motora bağlıdır. Motor dönmüyorsa yağ dolaşmaz.
+          Tekerlekler yerde sürüklenirse şanzıman yağsız çalışır ve ısınır. Bu yüzden araç
+          bir sürüklenme aracına değil, bir platforma çıkar.
+        </p>
+
+        <ul class="flatbed__list" data-reveal-group data-reveal-stagger="0.08">
+          <li>
+            <Icon name="check" size={18} />
+            <div>
+              <strong>Otomatik ve CVT şanzıman</strong>
+              <span>Yağ basıncı olmadan dönen bir şanzıman kendini yer.</span>
+            </div>
+          </li>
+          <li>
+            <Icon name="check" size={18} />
+            <div>
+              <strong>4x4 ve AWD araçlar</strong>
+              <span>İki tekerleği yerde bırakmak tüm aktarma organını çalıştırır.</span>
+            </div>
+          </li>
+          <li>
+            <Icon name="check" size={18} />
+            <div>
+              <strong>Elektrikli ve hibrit araçlar</strong>
+              <span>Tekerlek döndüğünde elektrik motoru jeneratöre dönüşür.</span>
+            </div>
+          </li>
+          <li>
+            <Icon name="check" size={18} />
+            <div>
+              <strong>Alçak gövdeli araçlar</strong>
+              <span>Rampa altına takoz konarak giriş açısı düşürülür, etek sürtmez.</span>
+            </div>
+          </li>
+        </ul>
+
+        <a href="/rehber/otomatik-vitesli-arac-nasil-cekilir/" class="btn btn--outline" data-reveal="up">
+          Teknik ayrıntı
+          <Icon name="arrow-up-right" size={17} />
+        </a>
+      </div>
+    </div>
+  </section>
+
+  {/* --- BÖLGELER --- */}
+  <section class="section band-stone-2">
+    <div class="container-site">
+      <SectionHead
+        kicker="Nerede"
+        title="Mersin şehir içi, dört merkez ilçe"
+        lead="Şehirlerarası iş almıyoruz. Dar bir alanı iyi bilmek, geniş bir alanı yüzeysel bilmekten hızlıdır."
+      />
+
+      <ul class="area-grid" data-reveal-group data-reveal-stagger="0.08">
+        {
+          districts.map((d) => (
+            <li>
+              <AreaCard
+                href={`/bolgeler/${d.slug}/`}
+                district={d.title}
+                short={d.short}
+                code={site.plateCode}
+              />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  {/* --- REHBER --- */}
+  <section class="section">
+    <div class="container-site">
+      <div class="posts-head">
+        <SectionHead
+          kicker="Rehber"
+          title="Yolda kalmadan önce okuyun"
+          lead="Aracınız yolda kaldığında ne yapacağınızı bilmek, panik anında en büyük avantaj."
+        />
+        <a href="/rehber/" class="btn btn--outline btn--sm posts-head__all">
+          Tüm yazılar
+          <Icon name="arrow-right" size={16} />
+        </a>
+      </div>
+
+      <ul class="posts" data-reveal-group data-reveal-stagger="0.08">
+        {
+          posts.map((p) => (
+            <li>
+              <a href={`/rehber/${p.id}/`} class="card card--hazard post">
+                <span class="post__cat">{p.data.category}</span>
+                <span class="post__title">{p.data.title}</span>
+                <span class="post__sum">{p.data.summary}</span>
+                <span class="post__more">
+                  Oku
+                  <Icon name="arrow-up-right" size={15} />
+                </span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  {/* --- S.S.S. --- */}
+  <section class="section band-ink">
+    <div class="container-site faq-wrap">
+      <Faq items={faq} kicker="Sık sorulanlar" title="Aramadan önce merak edilenler" />
+      <p class="faq-more">
+        Daha fazlası için <a href="/sss/" class="link-text">sıkça sorulan sorular</a> sayfasına
+        bakın.
+      </p>
+    </div>
+  </section>
+
+  <CtaBand tone="stone" />
+</Base>
+
+<style>
+  .svc-grid,
+  .area-grid,
+  .posts {
+    display: grid;
+    gap: 1rem;
+    margin: clamp(2.25rem, 4vw, 3rem) 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .svc-grid li,
+  .area-grid li,
+  .posts li {
+    display: flex;
+  }
+
+  .svc-grid li > :global(*),
+  .area-grid li > :global(*),
+  .posts li > :global(*) {
+    inline-size: 100%;
+  }
+
+  @media (min-width: 700px) {
+    .svc-grid,
+    .area-grid,
+    .posts {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  @media (min-width: 1080px) {
+    .svc-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    .area-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .posts {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  /* --- Kayar kasa bölümü --- */
+  .flatbed {
+    display: grid;
+    gap: clamp(2.25rem, 5vw, 4rem);
+    align-items: center;
+  }
+
+  @media (min-width: 980px) {
+    .flatbed {
+      grid-template-columns: minmax(0, 0.85fr) minmax(0, 1fr);
+    }
+  }
+
+  .flatbed__media {
+    position: relative;
+  }
+
+  .flatbed__frame {
+    border-radius: var(--radius-xl);
+    overflow: hidden;
+    aspect-ratio: 4 / 5;
+    box-shadow: var(--shadow-lg);
+  }
+
+  .flatbed__frame :global(.flatbed__img) {
+    block-size: 100%;
+  }
+
+  .flatbed__badge {
+    position: absolute;
+    inset-block-end: -1.25rem;
+    inset-inline-end: -0.75rem;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.35rem;
+    background-color: var(--color-amber-500);
+    color: var(--color-ink-900);
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-md);
+  }
+
+  @media (min-width: 640px) {
+    .flatbed__badge {
+      inset-inline-end: -1.5rem;
+    }
+  }
+
+  .flatbed__badge-num {
+    font-family: var(--font-display);
+    font-size: 2.75rem;
+    font-weight: 800;
+    line-height: 0.85;
+    letter-spacing: -0.04em;
+  }
+
+  .flatbed__badge-label {
+    font-family: var(--font-mono);
+    font-size: 0.6875rem;
+    font-weight: 500;
+    line-height: 1.35;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .flatbed__title {
+    margin-block-start: 0.9rem;
+    font-size: var(--text-h2);
+    line-height: var(--text-h2--line-height);
+    letter-spacing: var(--text-h2--letter-spacing);
+  }
+
+  .flatbed__lead {
+    display: block;
+    margin-block-start: 1.25rem;
+    max-inline-size: 52ch;
+    font-size: var(--text-lead);
+    line-height: 1.55;
+    color: var(--color-ink-900);
+  }
+
+  .flatbed__list {
+    margin: 2rem 0;
+    padding: 0;
+    list-style: none;
+    display: grid;
+    gap: 1rem;
+    border-block-start: 1px solid var(--color-stone-3);
+    padding-block-start: 1.75rem;
+  }
+
+  @media (min-width: 640px) {
+    .flatbed__list {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 1.75rem;
+    }
+  }
+
+  .flatbed__list li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.65rem;
+    align-items: start;
+  }
+
+  .flatbed__list :global(svg) {
+    margin-block-start: 0.2rem;
+    color: var(--color-verified);
+  }
+
+  .flatbed__list strong {
+    display: block;
+    font-family: var(--font-display);
+    font-size: 0.975rem;
+    font-weight: 600;
+    color: var(--color-ink-900);
+  }
+
+  .flatbed__list span {
+    display: block;
+    margin-block-start: 0.2rem;
+    font-size: var(--text-small);
+    line-height: 1.5;
+    color: var(--color-ink-600);
+  }
+
+  /* --- Rehber --- */
+  .posts-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: end;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .posts-head__all {
+    flex: none;
+  }
+
+  .post {
+    display: flex;
+    flex-direction: column;
+    gap: 0.7rem;
+    padding: clamp(1.35rem, 2.4vw, 1.85rem);
+    text-decoration: none;
+    overflow: hidden;
+  }
+
+  .post__cat {
+    align-self: start;
+    padding: 0.28rem 0.7rem;
+    background-color: var(--color-stone-2);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-display);
+    font-size: var(--text-label);
+    font-stretch: 82%;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--color-ink-700);
+  }
+
+  .post__title {
+    font-family: var(--font-display);
+    font-size: clamp(1.15rem, 1.02rem + 0.5vw, 1.35rem);
+    font-weight: 600;
+    line-height: 1.22;
+    letter-spacing: -0.015em;
+    color: var(--color-ink-900);
+  }
+
+  .post__sum {
+    flex: 1 1 auto;
+    font-size: var(--text-small);
+    line-height: 1.6;
+    color: var(--color-ink-600);
+  }
+
+  .post__more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--color-amber-700);
+  }
+
+  .post__more :global(svg) {
+    transition: transform var(--duration-base) var(--ease-out-quart);
+  }
+
+  .post:hover .post__more :global(svg) {
+    transform: translate(2px, -2px);
+  }
+
+  /* --- S.S.S. --- */
+  .faq-wrap {
+    max-inline-size: 62rem;
+  }
+
+  .faq-more {
+    margin-block-start: 2rem;
+    color: var(--color-ink-fg-muted);
+    font-size: var(--text-small);
+  }
+</style>

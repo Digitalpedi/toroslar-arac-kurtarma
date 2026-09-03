@@ -1,0 +1,102 @@
+---
+/**
+ * Marka kilidi — ikaz şeridi işareti + iki satırlı kelime markası.
+ * İşaret, site genelindeki hazard motifinin damıtılmış hâlidir: aynı -45° açı,
+ * aynı iki renk. Logo dosyası yerine satır içi SVG — CLS yok, tema uyumlu.
+ */
+interface Props {
+  /** Koyu zemin üzerinde mi duruyor */
+  onDark?: boolean;
+  /** Yalnız işaret (mobil daralmada) */
+  markOnly?: boolean;
+  class?: string;
+}
+
+const { onDark = false, markOnly = false, class: className = '' } = Astro.props;
+
+const ink = onDark ? 'var(--color-ink-fg)' : 'var(--color-ink-900)';
+const sub = onDark ? 'var(--color-ink-fg-muted)' : 'var(--color-ink-500)';
+---
+
+<span class={`brand ${className}`} style={`--brand-ink:${ink};--brand-sub:${sub}`}>
+  <svg class="brand__mark" viewBox="0 0 34 34" width="34" height="34" aria-hidden="true" focusable="false">
+    <defs>
+      <clipPath id="brand-clip">
+        <rect width="34" height="34" rx="9" />
+      </clipPath>
+    </defs>
+    <g clip-path="url(#brand-clip)">
+      <rect width="34" height="34" fill="var(--color-ink-900)" />
+      <g fill="var(--color-amber-500)">
+        <path d="M-4 30 L8 4 h6 L2 30 Z" />
+        <path d="M8 30 L20 4 h6 L14 30 Z" />
+        <path d="M20 30 L32 4 h6 L26 30 Z" />
+      </g>
+      <rect
+        width="34"
+        height="34"
+        rx="9"
+        fill="none"
+        stroke="var(--color-ink-900)"
+        stroke-width="2"
+        stroke-opacity="0.9"
+      />
+    </g>
+  </svg>
+
+  {
+    !markOnly && (
+      <span class="brand__type">
+        <span class="brand__name">Toroslar</span>
+        <span class="brand__sub">Araç Kurtarma</span>
+      </span>
+    )
+  }
+</span>
+
+<style>
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.65rem;
+    text-decoration: none;
+    color: var(--brand-ink);
+  }
+
+  .brand__mark {
+    flex: none;
+    inline-size: 2.125rem;
+    block-size: 2.125rem;
+    transition: transform var(--duration-base) var(--ease-spring);
+  }
+
+  a:hover .brand__mark,
+  a:focus-visible .brand__mark {
+    transform: rotate(-4deg) scale(1.04);
+  }
+
+  .brand__type {
+    display: flex;
+    flex-direction: column;
+    line-height: 1;
+  }
+
+  .brand__name {
+    font-family: var(--font-display);
+    font-size: 1.125rem;
+    font-weight: 700;
+    font-stretch: 100%;
+    letter-spacing: -0.025em;
+    color: var(--brand-ink);
+  }
+
+  .brand__sub {
+    margin-block-start: 0.22rem;
+    font-family: var(--font-mono);
+    font-size: 0.5875rem;
+    font-weight: 500;
+    letter-spacing: 0.19em;
+    text-transform: uppercase;
+    color: var(--brand-sub);
+  }
+</style>

@@ -1,0 +1,272 @@
+---
+import Base from '~/layouts/Base.astro';
+import PageHero from '~/components/PageHero.astro';
+import Sequence from '~/components/Sequence.astro';
+import Faq from '~/components/Faq.astro';
+import CtaBand from '~/components/CtaBand.astro';
+import Icon from '~/components/Icon.astro';
+import { site } from '~/data/site';
+import { howToNode, faqNode } from '~/lib/schema';
+
+const path = '/surec/';
+const breadcrumb = [{ name: 'Nasıl Çalışır', href: path }];
+
+const steps = [
+  {
+    title: 'Ararsınız, konum gönderirsiniz',
+    text: 'Adres tarif etmeye çalışmayın; WhatsApp’tan canlı konum göndermek hem daha hızlı hem hatasız. Aracın markası, vites tipi ve içinde bulunduğu durum da bu aşamada konuşulur.',
+    icon: 'headset' as const,
+    meta: 'Telefon 7/24 açık',
+  },
+  {
+    title: 'Durum netleştirilir, süre söylenir',
+    text: 'Araç serbest mi yoksa bir yere mi sıkışmış — bu tek soru işin türünü belirler. Konumunuza ve o anki trafiğe göre gerçekçi bir süre veririz.',
+    icon: 'route' as const,
+    meta: 'Taşıma mı, kurtarma mı?',
+  },
+  {
+    title: 'Doğru ekipmanla yola çıkılır',
+    text: 'Alçak gövde için rampa takozu, dönmeyen tekerlek için kaydırma takozu, dar sokak için makara düzeneği. Hazırlık yolda yapılır, olay yerinde değil.',
+    icon: 'truck' as const,
+    meta: 'Kayar kasa çekici',
+  },
+  {
+    title: 'Araç platforma alınır',
+    text: 'Dört tekerlek de yerden kesilir, bağlama lastik üzerinden yapılır. Yükleme öncesi araçtaki mevcut çizik ve ezikler birlikte görülür.',
+    icon: 'shield' as const,
+    meta: 'Şanzıman hiç dönmez',
+  },
+  {
+    title: 'Söylediğiniz adrese teslim edilir',
+    text: 'Servis, boyahane, eksper otoparkı ya da eviniz. Teslim noktası kapalıysa aracın nereye bırakılacağı ve anahtarın kimde kalacağı önceden konuşulur.',
+    icon: 'check' as const,
+    meta: 'Teslim teyit edilir',
+  },
+];
+
+const prepare = [
+  { label: 'Konum', detail: 'WhatsApp canlı konum — adres tarifinden çok daha hızlı ve hatasız' },
+  { label: 'Araç', detail: 'Marka, model, yaklaşık yıl ve vites tipi (otomatik / manuel)' },
+  { label: 'Durum', detail: 'Çalışıyor mu, tekerlekler dönüyor mu, vites boşa alınabiliyor mu' },
+  { label: 'Erişim', detail: 'Kapalı otopark mı, dar sokak mı, bulvar mı, rampada mı' },
+  { label: 'Teslim', detail: 'Aracın bırakılacağı adres ve o adresin o saatte açık olup olmadığı' },
+  { label: 'Ek durum', detail: 'Alçak gövde, elektrikli araç, yüklü ticari araç, anahtar yok gibi ayrıntılar' },
+];
+
+const faq = [
+  {
+    q: 'Konum göndermek zorunda mıyım?',
+    a: 'Zorunda değilsiniz ama şiddetle öneririz. Adres tarifi, özellikle gece ve tanımadığınız bir sokakta, hem uzun sürer hem yanlış anlaşılabilir. Canlı konum bu riski tamamen ortadan kaldırır.',
+  },
+  {
+    q: 'Aracın yanında beklemem gerekiyor mu?',
+    a: 'Aracın bulunduğu yerde sizin ya da yetkilendirdiğiniz birinin olması gerekir — anahtar teslimi ve mevcut hasarın birlikte görülmesi için. Hızlı bir yolda bekliyorsanız güvenliğiniz önce gelir; araçtan uzakta, bariyerin güvenli tarafında bekleyin.',
+  },
+  {
+    q: 'Aracı teslim ederken belge veriyor musunuz?',
+    a: 'Aracın teslim alındığı ve teslim edildiği noktalarda durumu birlikte görürüz. Servis kapalıysa aracın nereye bırakıldığı ve anahtarın kime verildiği telefonla teyit edilir.',
+  },
+  {
+    q: 'Ödemeyi ne zaman ve nasıl yapıyorum?',
+    a: 'Ücret telefonda, iş başlamadan önce konuşulur. Sahada sürpriz çıkmaması için aracın durumunu olduğu gibi anlatmanız önemli — eksik bilgi, olay yerinde fiyatın değişmesine yol açar.',
+  },
+  {
+    q: 'Aracımın içindeki eşyalar ne olacak?',
+    a: 'Ruhsat, değerli eşya ve kişisel eşyalarınızı aracı teslim etmeden önce almanızı öneririz.',
+  },
+];
+
+const schema = [
+  howToNode({
+    name: 'Mersin’de çekici nasıl çağrılır?',
+    description: 'Çağrıdan teslimata çekici süreci — beş adım.',
+    path,
+    steps: steps.map((s) => ({ name: s.title, text: s.text })),
+  }),
+  faqNode(faq),
+].filter((n) => n !== null);
+---
+
+<Base
+  title="Nasıl Çalışır? | Çağrıdan Teslimata Çekici Süreci"
+  description="Mersin’de çekici çağırdığınızda ne oluyor? Telefonda ne sorulur, hangi ekipman gelir, araç nasıl yüklenir ve nereye teslim edilir — adım adım."
+  path={path}
+  breadcrumb={breadcrumb}
+  schema={schema}
+  headerOnDark
+>
+  <PageHero
+    kicker="Nasıl çalışır"
+    title="Çağrıdan teslimata"
+    lead="Sürprizi sevmiyoruz. Telefonu açtığınız andan aracınızı teslim ettiğimiz ana kadar ne olacağını baştan bilin."
+    breadcrumb={breadcrumb}
+    watermark="05"
+  />
+
+  <Sequence kicker="Adım adım" title="Beş adımda çekici süreci" steps={steps} />
+
+  <section class="section">
+    <div class="container-site prep">
+      <div data-reveal="up">
+        <p class="kicker">Aramadan önce</p>
+        <h2 class="prep__title">Altı bilgiyi hazır tutun</h2>
+        <p class="prep__lead">
+          Bunları tek mesajda gönderirseniz ekip yolda gerekli hazırlığı yaparak gelir. Eksik
+          bilgi, olay yerinde “bununla olmaz” cümlesine dönüşür.
+        </p>
+        <a href={site.whatsapp.url} class="btn btn--signal" target="_blank" rel="noopener">
+          <Icon name="whatsapp" size={19} />
+          WhatsApp’tan gönder
+        </a>
+      </div>
+
+      <ol class="prep__list" data-reveal-group data-reveal-stagger="0.07">
+        {
+          prepare.map((p, i) => (
+            <li>
+              <span class="prep__num meta">{String(i + 1).padStart(2, '0')}</span>
+              <span class="prep__label">{p.label}</span>
+              <span class="prep__detail">{p.detail}</span>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <section class="section-sm band-stone-2">
+    <div class="container-site">
+      <div class="warn" data-reveal="up">
+        <span class="warn__icon">
+          <Icon name="alert" size={26} />
+        </span>
+        <div>
+          <h2 class="warn__title">Beklerken güvenliğiniz her şeyin önünde</h2>
+          <p class="warn__text">
+            Dörtlüleri açın, reflektif yeleği araçtan inmeden giyin, sağ taraftan inin ve
+            üçgen reflektörü aracın arkasına yeterince geriye koyun. Hızlı bir yolda
+            bekliyorsanız araçta oturmayın — bariyerin güvenli tarafına geçin.
+          </p>
+          <a href="/rehber/yol-kenarinda-guvenlik-yelek-ucgen-reflektor/" class="link-text">
+            Yol kenarında güvenlik rehberi
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-site faq-wrap">
+      <Faq items={faq} kicker="Sık sorulanlar" title="Süreç hakkında sorular" />
+    </div>
+  </section>
+
+  <CtaBand />
+</Base>
+
+<style>
+  .prep {
+    display: grid;
+    gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: start;
+  }
+
+  @media (min-width: 960px) {
+    .prep {
+      grid-template-columns: minmax(0, 22rem) 1fr;
+    }
+  }
+
+  .prep__title {
+    margin-block-start: 0.9rem;
+    font-size: var(--text-h2);
+    line-height: var(--text-h2--line-height);
+    letter-spacing: var(--text-h2--letter-spacing);
+  }
+
+  .prep__lead {
+    margin-block: 1rem 1.75rem;
+    color: var(--color-ink-600);
+    max-inline-size: 36ch;
+  }
+
+  .prep__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-block-start: 1px solid var(--color-stone-3);
+  }
+
+  .prep__list li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    column-gap: 1rem;
+    row-gap: 0.35rem;
+    padding-block: 1.15rem;
+    border-block-end: 1px solid var(--color-stone-3);
+  }
+
+  @media (min-width: 700px) {
+    .prep__list li {
+      grid-template-columns: auto minmax(0, 9rem) 1fr;
+      align-items: baseline;
+      row-gap: 0;
+      column-gap: 1.5rem;
+    }
+  }
+
+  .prep__num {
+    color: var(--color-amber-600);
+  }
+
+  .prep__label {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--color-ink-900);
+  }
+
+  .prep__detail {
+    grid-column: 2 / -1;
+    font-size: var(--text-small);
+    line-height: 1.6;
+    color: var(--color-ink-600);
+  }
+
+  @media (min-width: 700px) {
+    .prep__detail {
+      grid-column: 3;
+    }
+  }
+
+  .warn {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.25rem;
+    padding: clamp(1.5rem, 3vw, 2.25rem);
+    background-color: var(--color-stone-0);
+    border: 1px solid var(--color-stone-3);
+    border-inline-start: 5px solid var(--color-amber-500);
+    border-radius: var(--radius-lg);
+    max-inline-size: 58rem;
+  }
+
+  .warn__icon {
+    color: var(--color-amber-600);
+  }
+
+  .warn__title {
+    font-size: var(--text-h3);
+    line-height: 1.2;
+  }
+
+  .warn__text {
+    margin-block: 0.75rem 1rem;
+    color: var(--color-ink-600);
+    line-height: 1.65;
+  }
+
+  .faq-wrap {
+    max-inline-size: 60rem;
+  }
+</style>

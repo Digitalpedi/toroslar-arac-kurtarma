@@ -1,0 +1,120 @@
+---
+import Breadcrumbs from './Breadcrumbs.astro';
+import Icon from './Icon.astro';
+import { site } from '~/data/site';
+
+interface Props {
+  kicker?: string;
+  title: string;
+  lead?: string;
+  breadcrumb: { name: string; href: string }[];
+  /** Sağda görünen büyük filigran metin — sayfa kimliği */
+  watermark?: string;
+  /** Hero altında hızlı eylemler */
+  showCta?: boolean;
+}
+
+const { kicker, title, lead, breadcrumb, watermark, showCta = true } = Astro.props;
+---
+
+<section class="page-hero band-ink" data-scene>
+  {watermark && <span class="page-hero__watermark" aria-hidden="true" data-parallax="0.12">{watermark}</span>}
+
+  <div class="container-site page-hero__inner">
+    <Breadcrumbs trail={breadcrumb} onDark />
+
+    {kicker && <p class="kicker page-hero__kicker">{kicker}</p>}
+
+    <h1 class="page-hero__title" data-line-reveal>
+      <span>{title}</span>
+    </h1>
+
+    {lead && <p class="page-hero__lead" data-reveal="up" data-reveal-delay="0.1">{lead}</p>}
+
+    {
+      showCta && (
+        <div class="page-hero__cta" data-reveal="up" data-reveal-delay="0.18">
+          <a href={site.phone.href} class="btn btn--signal" data-magnetic="0.14">
+            <Icon name="phone" size={18} />
+            {site.phone.display}
+          </a>
+          <a href={site.whatsapp.url} class="btn btn--outline" target="_blank" rel="noopener">
+            <Icon name="whatsapp" size={18} />
+            WhatsApp
+          </a>
+          <span class="meta page-hero__hours">
+            <Icon name="clock" size={14} />
+            {site.hoursLabel}
+          </span>
+        </div>
+      )
+    }
+  </div>
+
+  <div class="hazard-bar" aria-hidden="true"></div>
+</section>
+
+<style>
+  .page-hero {
+    position: relative;
+    overflow: hidden;
+    padding-block-start: calc(var(--header-h) + clamp(2.5rem, 6vw, 4.5rem));
+  }
+
+  .page-hero__inner {
+    position: relative;
+    z-index: 1;
+    padding-block-end: clamp(2.75rem, 6vw, 4.5rem);
+    max-inline-size: 62rem;
+  }
+
+  .page-hero__kicker {
+    margin-block-start: 1.6rem;
+  }
+
+  .page-hero__title {
+    margin-block-start: 0.9rem;
+    font-size: var(--text-h1);
+    line-height: var(--text-h1--line-height);
+    letter-spacing: var(--text-h1--letter-spacing);
+    font-weight: 700;
+  }
+
+  .page-hero__lead {
+    margin-block-start: 1.25rem;
+    max-inline-size: 52ch;
+    font-size: var(--text-lead);
+    line-height: var(--text-lead--line-height);
+    color: var(--color-ink-fg-muted);
+  }
+
+  .page-hero__cta {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.7rem;
+    margin-block-start: 1.9rem;
+  }
+
+  .page-hero__hours {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+
+  .page-hero__watermark {
+    position: absolute;
+    inset-block-start: 42%;
+    inset-inline-end: -0.06em;
+    font-family: var(--font-display);
+    font-size: clamp(6rem, 22vw, 17rem);
+    font-weight: 800;
+    font-stretch: 100%;
+    letter-spacing: -0.05em;
+    line-height: 0.8;
+    color: rgb(239 241 236 / 0.045);
+    pointer-events: none;
+    user-select: none;
+    white-space: nowrap;
+  }
+</style>

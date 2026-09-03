@@ -1,0 +1,102 @@
+---
+import Icon from './Icon.astro';
+import type { IconName } from '~/lib/icons';
+
+interface Props {
+  href: string;
+  title: string;
+  summary: string;
+  icon: IconName;
+  index?: number;
+  /** Başlık seviyesi — hub sayfalarında h1'den sonra h2 gelmeli */
+  as?: 'h2' | 'h3';
+}
+
+const { href, title, summary, icon, index, as: Heading = 'h3' } = Astro.props;
+---
+
+<a href={href} class="card card--hazard svc">
+  <span class="svc__top">
+    <span class="svc__icon">
+      <Icon name={icon} size={24} />
+    </span>
+    {index !== undefined && <span class="svc__index meta">{String(index).padStart(2, '0')}</span>}
+  </span>
+
+  <Heading class="svc__title">{title}</Heading>
+  <p class="svc__summary">{summary}</p>
+
+  <span class="svc__more">
+    Detaylar
+    <Icon name="arrow-up-right" size={16} />
+  </span>
+</a>
+
+<style>
+  .svc {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    padding: clamp(1.35rem, 2.4vw, 1.9rem);
+    text-decoration: none;
+    overflow: hidden;
+  }
+
+  .svc__top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+
+  .svc__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 3rem;
+    block-size: 3rem;
+    border-radius: var(--radius-md);
+    background-color: var(--color-stone-2);
+    color: var(--color-ink-900);
+    transition:
+      background-color var(--duration-base) var(--ease-out-quart),
+      color var(--duration-base) var(--ease-out-quart);
+  }
+
+  .svc:hover .svc__icon {
+    background-color: var(--color-amber-500);
+  }
+
+  .svc__title {
+    font-size: var(--text-h3);
+    line-height: var(--text-h3--line-height);
+    letter-spacing: var(--text-h3--letter-spacing);
+  }
+
+  .svc__summary {
+    color: var(--color-ink-600);
+    font-size: var(--text-small);
+    line-height: 1.62;
+    flex: 1 1 auto;
+  }
+
+  .svc__more {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-block-start: 0.35rem;
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 600;
+    font-stretch: 90%;
+    color: var(--color-amber-700);
+  }
+
+  .svc__more :global(svg) {
+    transition: transform var(--duration-base) var(--ease-out-quart);
+  }
+
+  .svc:hover .svc__more :global(svg) {
+    transform: translate(2px, -2px);
+  }
+</style>

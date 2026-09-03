@@ -1,0 +1,36 @@
+{
+  "name": "toroslar-arac-kurtarma",
+  "type": "module",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Toroslar Araç Kurtarma — Mersin şehir içi oto çekici ve araç kurtarma. Astro + Tailwind v4.",
+  "scripts": {
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro check && astro build",
+    "build:fast": "astro build",
+    "preview": "astro preview",
+    "astro": "astro",
+    "media": "node scripts/process-media.mjs",
+    "assets": "node scripts/generate-assets.mjs",
+    "qa": "node scripts/qa.mjs",
+    "media:fetch": "node scripts/fetch-media.mjs",
+    "shots": "node scripts/screenshots.mjs"
+  },
+  "dependencies": {
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/sitemap": "^3.7.0",
+    "@fontsource-variable/bricolage-grotesque": "^5.3.0",
+    "@fontsource-variable/ibm-plex-sans": "^5.3.0",
+    "@fontsource/ibm-plex-mono": "^5.3.0",
+    "@tailwindcss/vite": "^4.1.18",
+    "astro": "^5.16.2",
+    "gsap": "^3.13.0",
+    "tailwindcss": "^4.1.18",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1",
+    "sharp": "^0.34.4"
+  }
+}

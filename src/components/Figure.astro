@@ -1,0 +1,73 @@
+---
+/**
+ * Görsel — AVIF + WebP + JPEG geri düşüş.
+ * `scripts/process-media.mjs` her kaynak için `<ad>-<genişlik>.<biçim>`
+ * dosyalarını `public/media/` altına üretir. width/height ZORUNLU: tarayıcı
+ * yeri baştan ayırır, düzen kayması (CLS) olmaz.
+ */
+interface Props {
+  /** public/media altındaki dosya kökü, uzantısız. Örn: 'hero-cekici' */
+  name: string;
+  alt: string;
+  /** Kaynağın gerçek en-boy oranını veren ölçüler */
+  width: number;
+  height: number;
+  sizes?: string;
+  loading?: 'lazy' | 'eager';
+  fetchpriority?: 'high' | 'low' | 'auto';
+  class?: string;
+  imgClass?: string;
+  /** object-fit: cover kabı doldursun */
+  cover?: boolean;
+}
+
+const WIDTHS = [640, 1024, 1600, 2200];
+
+const {
+  name,
+  alt,
+  width,
+  height,
+  sizes = '(min-width: 1200px) 1100px, 100vw',
+  loading = 'lazy',
+  fetchpriority = 'auto',
+  class: className = '',
+  imgClass = '',
+  cover = false,
+} = Astro.props;
+
+const srcset = (ext: string) =>
+  WIDTHS.map((w) => `/media/${name}-${w}.${ext} ${w}w`).join(', ');
+---
+
+<picture class={className}>
+  <source type="image/avif" srcset={srcset('avif')} sizes={sizes} />
+  <source type="image/webp" srcset={srcset('webp')} sizes={sizes} />
+  <img
+    src={`/media/${name}-1600.jpg`}
+    alt={alt}
+    width={width}
+    height={height}
+    loading={loading}
+    fetchpriority={fetchpriority}
+    decoding={loading === 'eager' ? 'sync' : 'async'}
+    class:list={[imgClass, cover && 'is-cover']}
+  />
+</picture>
+
+<style>
+  picture {
+    display: block;
+  }
+
+  img {
+    inline-size: 100%;
+    block-size: auto;
+    background-color: var(--color-stone-2);
+  }
+
+  img.is-cover {
+    block-size: 100%;
+    object-fit: cover;
+  }
+</style>

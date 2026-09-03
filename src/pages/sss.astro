@@ -1,0 +1,235 @@
+---
+import Base from '~/layouts/Base.astro';
+import PageHero from '~/components/PageHero.astro';
+import Faq from '~/components/Faq.astro';
+import CtaBand from '~/components/CtaBand.astro';
+import { faqNode } from '~/lib/schema';
+
+const path = '/sss/';
+const breadcrumb = [{ name: 'Sıkça Sorulan Sorular', href: path }];
+
+const groups = [
+  {
+    id: 'genel',
+    kicker: 'Genel',
+    title: 'Hizmet, bölge ve saatler',
+    items: [
+      {
+        q: 'Mersin’in hangi bölgelerine geliyorsunuz?',
+        a: 'Mersin şehir içi: Toroslar, Yenişehir, Mezitli ve Akdeniz ilçelerinin tamamı. Şehirlerarası taşıma yapmıyoruz; işimizi şehir merkeziyle sınırlı tutmamızın sebebi hızlı olabilmek.',
+      },
+      {
+        q: 'Gece, hafta sonu ve bayramda da çalışıyor musunuz?',
+        a: '7/24 kesintisiz. Telefon gece, hafta sonu ve resmî tatiller dâhil her saat açık.',
+      },
+      {
+        q: 'Hangi araçları taşıyorsunuz?',
+        a: 'Binek otomobiller ve hafif ticari araçlar: panelvan, kamyonet, minibüs ve pick-up. Kamyon, tır, otobüs gibi ağır vasıtaları ve iş makinelerini taşımıyoruz.',
+      },
+      {
+        q: 'Akü takviyesi, lastik değişimi veya yakıt ikmali yapıyor musunuz?',
+        a: 'Hayır. Yerinde yol yardımı hizmeti vermiyoruz. Yaptığımız iş, hareket edemeyen aracı bulunduğu yerden alıp söylediğiniz adrese taşımak.',
+      },
+      {
+        q: 'Araç onarımı yapıyor musunuz?',
+        a: 'Hayır. Arıza tespiti ve onarım servisin işi. Biz aracı servise sağlam ulaştırırız.',
+      },
+      {
+        q: 'Fiziksel bir ofisiniz var mı?',
+        a: 'Sabit bir ofisimiz yok; mobil hizmet veriyoruz. Buluşma noktası, aracınızın bulunduğu yer.',
+      },
+    ],
+  },
+  {
+    id: 'teknik',
+    kicker: 'Teknik',
+    title: 'Araç, ekipman ve yöntem',
+    items: [
+      {
+        q: 'Otomatik vitesli aracım çekilirken zarar görür mü?',
+        a: 'Kayar kasa çekicide dört tekerlek de yerden kesildiği için şanzıman hiç dönmez. Otomatik şanzımanlı araçlar için doğru yöntem budur. Tekerlekleri yerde sürükleyerek çekmek, motor durduğunda yağ pompası da durduğu için şanzımanı yağsız çalıştırır ve zarar verir.',
+      },
+      {
+        q: 'Elektrikli veya hibrit aracım taşınabilir mi?',
+        a: 'Evet, tam platformla. Elektrikli araçlarda tekerlek döndüğünde motor jeneratör gibi davranır; bu yüzden dört tekerleğin de yerden kesilmesi gerekir. Aracın yüksek gerilim sisteminde görünür hasar, yanık kokusu veya uyarı varsa bunu telefonda mutlaka belirtin.',
+      },
+      {
+        q: '4x4 aracım için farklı bir yöntem gerekiyor mu?',
+        a: 'Dört tekerden çekişli araçlarda ön ve arka aks bağlantılıdır; iki tekerleği yerde bırakmak bile tüm aktarma organını çalıştırır. Tam platform tek doğru yöntemdir — bizim standart çalışma biçimimiz zaten bu.',
+      },
+      {
+        q: 'Aracımın tekerlekleri hiç dönmüyor, yine de alabilir misiniz?',
+        a: 'Evet. Kaydırma takozları tekerleği devre dışı bırakır; araç takozlar üzerinde her yöne, hatta yanlamasına hareket ettirilebilir. Fren kilitli, şanzıman park konumunda veya rulmanı sıkışmış araçlarda bu yöntem kullanılır.',
+      },
+      {
+        q: 'Alçak gövdeli / spor süspansiyonlu aracım kasaya çıkarken sürter mi?',
+        a: 'Rampa altına takoz konarak giriş açısı düşürülür. Aracı çağırırken alçak olduğunu söylemeniz yeterli; ekip hazırlıklı gelir.',
+      },
+      {
+        q: 'Bağlama nereden yapılıyor, boyaya zarar verir mi?',
+        a: 'Bağlama lastik üzerinden yapılır; kayışlar boyalı yüzeye veya şasiye temas etmez. Yeni boyanmış araçlarda taşıma zamanlaması ustanın önerisine göre planlanır.',
+      },
+    ],
+  },
+  {
+    id: 'surec',
+    kicker: 'Süreç',
+    title: 'Çağrı, teslimat ve ücret',
+    items: [
+      {
+        q: 'Ne kadar sürede gelirsiniz?',
+        a: 'Süre; konumunuza, o anki trafiğe ve ekibin bulunduğu yere bağlı. Telefonda size gerçekçi bir süre söyleriz — tutamayacağımız bir rakam vermeyiz.',
+      },
+      {
+        q: 'Telefonda net fiyat alabilir miyim?',
+        a: 'Aracın konumunu, teslim adresini, marka-modelini, durumunu ve erişim koşullarını (kapalı otopark, dar sokak vb.) doğru anlatırsanız büyük ölçüde evet. Eksik bilgi, olay yerinde fiyatın değişmesine yol açar.',
+      },
+      {
+        q: 'Kaskom çekici ücretini karşılar mı?',
+        a: 'Bazı kasko poliçelerinde asistans veya çekme teminatı bulunur; kapsam ve limit poliçeden poliçeye değişir. Poliçenizi ya da sigorta şirketinizi kontrol edin.',
+      },
+      {
+        q: 'Aracın yanında beklemem gerekiyor mu?',
+        a: 'Aracın bulunduğu yerde sizin ya da yetkilendirdiğiniz birinin bulunması gerekir — anahtar teslimi ve mevcut hasarın birlikte görülmesi için. Hızlı bir yolda bekliyorsanız güvenliğiniz önce gelir: araçtan uzakta, bariyerin güvenli tarafında bekleyin.',
+      },
+      {
+        q: 'Aracı hangi saatte olursa olsun servise bırakabilir misiniz?',
+        a: 'Servis kapalıysa iki seçenek var: aracı servisin dış otoparkına bırakıp anahtarı sizde tutmak, ya da aracı belirlediğiniz güvenli bir noktaya götürmek. Kararı birlikte veririz.',
+      },
+      {
+        q: 'Kaza sonrası aracı doğrudan ekspere götürebilir misiniz?',
+        a: 'Tutanak süreci tamamlandıysa evet. Sigorta şirketinizin yönlendirdiği eksper otoparkının adresini bize iletin. Teslim noktasının o saatte açık olup olmadığını önceden teyit etmeniz zaman kazandırır.',
+      },
+    ],
+  },
+  {
+    id: 'acil',
+    kicker: 'Acil durum',
+    title: 'Yolda kaldığınızda',
+    items: [
+      {
+        q: 'Yolda kaldım, ilk ne yapmalıyım?',
+        a: 'Dörtlüleri açın, reflektif yeleğinizi araçtan inmeden giyin, sağ taraftan inin ve üçgen reflektörü aracın arkasına, gelen sürücülerin sizi zamanında fark edebileceği mesafeye koyun. Hızlı bir yoldaysanız bariyerin güvenli tarafına geçin; araçta oturmayın.',
+      },
+      {
+        q: 'Kaza yaptım, aracı hemen çektirebilir miyim?',
+        a: 'Yalnızca maddi hasarlı bir kazada ve tutanak süreci tamamlandıysa. Yaralanma varsa, taraflardan biri sürücü belgesiz veya alkollüyse ya da kamu malına zarar geldiyse trafik ekipleri gelmeden araçlar yerinden oynatılmamalıdır.',
+      },
+      {
+        q: 'Hararet yapan aracımı servise kadar sürebilir miyim?',
+        a: 'Sürmeyin. Hararet göstergesi kırmızıya girdiğinde silindir kapağı ve conta zorlanır; birkaç kilometre, motor revizyonuna dönüşebilir. Aracı durdurun ve taşıtın.',
+      },
+      {
+        q: 'Aracımı halatla çektirebilir miyim?',
+        a: 'Önerilmez. Motoru çalışmayan araçta fren ve direksiyon takviyesi yoktur: pedal sertleşir, direksiyon ağırlaşır. Trafikte bu ikisi tek başına kaza sebebidir. Otomatik şanzımanda ayrıca şanzıman riski vardır.',
+      },
+      {
+        q: 'Aracım kapalı otoparkta kaldı, çekici içeri girebilir mi?',
+        a: 'Neredeyse hiçbir kapalı otoparkın giriş yüksekliği çekici için yeterli değildir. Araç kaydırma takozlarıyla dışarı çıkarılır ve açık alanda yüklenir. Site veya iş merkezi yönetimine önceden haber vermeniz süreci hızlandırır.',
+      },
+    ],
+  },
+];
+
+const allItems = groups.flatMap((g) => g.items);
+
+const schema = [faqNode(allItems)].filter((n) => n !== null);
+---
+
+<Base
+  title="Sıkça Sorulan Sorular | Mersin Çekici — Toroslar Araç Kurtarma"
+  description="Mersin’de çekici hakkında en çok sorulanlar: hangi araçlar taşınır, otomatik vitesli araç nasıl çekilir, ücret neye göre belirlenir, kaza sonrası ne yapılır?"
+  path={path}
+  breadcrumb={breadcrumb}
+  schema={schema}
+  headerOnDark
+>
+  <PageHero
+    kicker="S.S.S."
+    title="Sıkça sorulan sorular"
+    lead="Telefonda en çok duyduğumuz soruların cevapları. Aradığınızı bulamazsanız aramanız yeterli."
+    breadcrumb={breadcrumb}
+    watermark="?"
+    showCta={false}
+  />
+
+  <nav class="jump" aria-label="Bölümler">
+    <div class="container-site jump__inner">
+      {
+        groups.map((g) => (
+          <a href={`#${g.id}`} class="jump__link">
+            {g.kicker}
+          </a>
+        ))
+      }
+    </div>
+  </nav>
+
+  {
+    groups.map((g, i) => (
+      <section class:list={['section', i % 2 === 1 && 'band-stone-2']} id={g.id}>
+        <div class="container-site faq-wrap">
+          <Faq items={g.items} kicker={g.kicker} title={g.title} />
+        </div>
+      </section>
+    ))
+  }
+
+  <CtaBand />
+</Base>
+
+<style>
+  .jump {
+    position: sticky;
+    inset-block-start: var(--header-h);
+    z-index: var(--z-sticky);
+    background-color: color-mix(in srgb, var(--color-stone-1) 92%, transparent);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-block-end: 1px solid var(--color-stone-3);
+  }
+
+  .jump__inner {
+    display: flex;
+    gap: 0.5rem;
+    overflow-x: auto;
+    padding-block: 0.75rem;
+    scrollbar-width: none;
+  }
+
+  .jump__inner::-webkit-scrollbar {
+    display: none;
+  }
+
+  .jump__link {
+    flex: none;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--color-stone-3);
+    border-radius: var(--radius-pill);
+    font-family: var(--font-display);
+    font-size: 0.875rem;
+    font-weight: 500;
+    font-stretch: 90%;
+    text-decoration: none;
+    color: var(--color-ink-700);
+    white-space: nowrap;
+    transition:
+      background-color var(--duration-fast) linear,
+      border-color var(--duration-fast) linear,
+      color var(--duration-fast) linear;
+  }
+
+  .jump__link:hover {
+    background-color: var(--color-ink-900);
+    border-color: var(--color-ink-900);
+    color: var(--color-stone-1);
+  }
+
+  .faq-wrap {
+    max-inline-size: 62rem;
+  }
+
+  section[id] {
+    scroll-margin-block-start: calc(var(--header-h) + 4rem);
+  }
+</style>

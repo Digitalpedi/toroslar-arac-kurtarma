@@ -1,0 +1,373 @@
+---
+import Base from '~/layouts/Base.astro';
+import PageHero from '~/components/PageHero.astro';
+import Icon from '~/components/Icon.astro';
+import { site, districts } from '~/data/site';
+
+const path = '/iletisim/';
+const breadcrumb = [{ name: 'İletişim', href: path }];
+
+const checklist = [
+  'Konum — WhatsApp canlı konum',
+  'Marka, model ve vites tipi',
+  'Araç çalışıyor mu, tekerlekler dönüyor mu',
+  'Bir yere sıkışmış mı, kapalı otoparkta mı',
+  'Aracın bırakılacağı adres',
+  'Alçak gövde / elektrikli araç / yüklü ticari araç gibi ayrıntılar',
+];
+---
+
+<Base
+  title="İletişim | Mersin Çekici 0534 603 02 33 — Toroslar Araç Kurtarma"
+  description="Mersin şehir içi 7/24 çekici. Telefon 0534 603 02 33, WhatsApp’tan konum gönderin. Toroslar, Yenişehir, Mezitli ve Akdeniz’e hizmet."
+  path={path}
+  breadcrumb={breadcrumb}
+  headerOnDark
+>
+  <PageHero
+    kicker="İletişim"
+    title="Tek numara, 7/24 açık"
+    lead="Konumunuzu gönderin, gerisini telefonda konuşalım. Adres tarif etmeye çalışmayın — canlı konum hem daha hızlı hem hatasız."
+    breadcrumb={breadcrumb}
+    watermark="7/24"
+    showCta={false}
+  />
+
+  <section class="section">
+    <div class="container-site channels">
+      <a href={site.phone.href} class="channel channel--call" data-reveal="up" data-magnetic="0.06">
+        <span class="channel__icon">
+          <Icon name="phone" size={26} />
+        </span>
+        <span class="channel__label meta">Ara</span>
+        <span class="channel__value">{site.phone.display}</span>
+        <span class="channel__note">Gece, hafta sonu, resmî tatil — fark etmez</span>
+      </a>
+
+      <a
+        href={site.whatsapp.url}
+        class="channel channel--wa"
+        target="_blank"
+        rel="noopener"
+        data-reveal="up"
+        data-reveal-delay="0.08"
+        data-magnetic="0.06"
+      >
+        <span class="channel__icon">
+          <Icon name="whatsapp" size={26} />
+        </span>
+        <span class="channel__label meta">WhatsApp</span>
+        <span class="channel__value">Konum gönder</span>
+        <span class="channel__note">Mesaj hazır gelir, göndermeniz yeterli</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="section-sm band-stone-2">
+    <div class="container-site info">
+      <div class="info__block" data-reveal="up">
+        <h2 class="info__title">
+          <Icon name="clock" size={20} />
+          Çalışma saatleri
+        </h2>
+        <p class="info__big">{site.hoursLabel}</p>
+        <p class="info__text">{site.hoursNote}</p>
+      </div>
+
+      <div class="info__block" data-reveal="up" data-reveal-delay="0.08">
+        <h2 class="info__title">
+          <Icon name="map-pin" size={20} />
+          Hizmet bölgesi
+        </h2>
+        <p class="info__big">Mersin şehir içi</p>
+        <ul class="info__districts">
+          {
+            districts.map((d) => (
+              <li>
+                <a href={`/bolgeler/${d.slug}/`}>{d.district}</a>
+              </li>
+            ))
+          }
+        </ul>
+        <p class="info__text">
+          Şehirlerarası taşıma yapmıyoruz. Sabit bir ofisimiz yok — mobil hizmet veriyoruz,
+          buluşma noktası aracınızın bulunduğu yer.
+        </p>
+      </div>
+
+      <div class="info__block" data-reveal="up" data-reveal-delay="0.16">
+        <h2 class="info__title">
+          <Icon name="car" size={20} />
+          Taşıdığımız araçlar
+        </h2>
+        <p class="info__big">Binek ve hafif ticari</p>
+        <p class="info__text">
+          Otomobil, panelvan, kamyonet, minibüs ve pick-up. Kamyon, tır, otobüs gibi ağır
+          vasıtaları ve iş makinelerini taşımıyoruz; yerinde yol yardımı da vermiyoruz.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-site prep">
+      <div data-reveal="up">
+        <p class="kicker">Aramadan önce</p>
+        <h2 class="prep__title">Bu altı bilgiyi hazır tutun</h2>
+        <p class="prep__lead">
+          Hepsini tek mesajda gönderirseniz ekip yolda hazırlığını yapar. Eksik bilgi, olay
+          yerinde zaman kaybına dönüşür.
+        </p>
+      </div>
+
+      <ul class="prep__list" data-reveal-group data-reveal-stagger="0.06">
+        {
+          checklist.map((c, i) => (
+            <li>
+              <span class="prep__num meta">{String(i + 1).padStart(2, '0')}</span>
+              <span>{c}</span>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section class="section-sm band-ink" data-scene>
+    <div class="container-site emergency">
+      <span class="emergency__icon">
+        <Icon name="alert" size={28} />
+      </span>
+      <div>
+        <h2 class="emergency__title">Yaralı varsa önce 112</h2>
+        <p class="emergency__text">
+          Kazada yaralanma varsa ilk arayacağınız numara 112 Acil Sağlık’tır. Yaralıyı,
+          ikinci bir tehlike yoksa yerinden oynatmayın. Aracın taşınması bundan sonraki adım.
+        </p>
+        <a href="/rehber/kaza-sonrasi-tutanak-ve-cekici-sureci/" class="link-text">
+          Kaza sonrası süreç rehberi
+        </a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .channels {
+    display: grid;
+    gap: 1rem;
+  }
+
+  @media (min-width: 800px) {
+    .channels {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .channel {
+    display: grid;
+    gap: 0.4rem;
+    padding: clamp(1.75rem, 4vw, 2.75rem);
+    border-radius: var(--radius-xl);
+    text-decoration: none;
+    transition:
+      transform var(--duration-base) var(--ease-out-quart),
+      box-shadow var(--duration-base) var(--ease-out-quart);
+  }
+
+  .channel:hover {
+    box-shadow: var(--shadow-lg);
+  }
+
+  .channel--call {
+    background-color: var(--color-amber-500);
+    color: var(--color-ink-900);
+  }
+
+  .channel--wa {
+    background-color: var(--color-ink-900);
+    color: var(--color-ink-fg);
+  }
+
+  .channel__icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    inline-size: 3.5rem;
+    block-size: 3.5rem;
+    border-radius: var(--radius-md);
+    margin-block-end: 0.75rem;
+  }
+
+  .channel--call .channel__icon {
+    background-color: rgb(13 17 16 / 0.12);
+  }
+
+  .channel--wa .channel__icon {
+    background-color: rgb(239 241 236 / 0.1);
+    color: var(--color-amber-400);
+  }
+
+  .channel__label {
+    color: inherit;
+    opacity: 0.7;
+  }
+
+  .channel__value {
+    font-family: var(--font-display);
+    font-size: clamp(1.7rem, 1.2rem + 2.2vw, 2.6rem);
+    font-weight: 700;
+    font-stretch: 100%;
+    letter-spacing: -0.03em;
+    line-height: 1.05;
+  }
+
+  .channel--call .channel__value {
+    font-family: var(--font-mono);
+    font-size: clamp(1.5rem, 1rem + 2.2vw, 2.35rem);
+    letter-spacing: -0.01em;
+  }
+
+  .channel__note {
+    font-size: var(--text-small);
+    opacity: 0.78;
+  }
+
+  .info {
+    display: grid;
+    gap: clamp(1.75rem, 4vw, 2.5rem);
+  }
+
+  @media (min-width: 880px) {
+    .info {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  .info__title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: var(--text-label);
+    font-stretch: 80%;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--color-ink-500);
+    padding-block-end: 0.9rem;
+    border-block-end: 1px solid var(--color-stone-3);
+  }
+
+  .info__title :global(svg) {
+    color: var(--color-amber-600);
+  }
+
+  .info__big {
+    margin-block-start: 1.15rem;
+    font-family: var(--font-display);
+    font-size: clamp(1.35rem, 1.15rem + 0.8vw, 1.75rem);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--color-ink-900);
+  }
+
+  .info__text {
+    margin-block-start: 0.75rem;
+    font-size: var(--text-small);
+    line-height: 1.62;
+    color: var(--color-ink-600);
+  }
+
+  .info__districts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 0.9rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .info__districts a {
+    display: inline-block;
+    padding: 0.3rem 0.7rem;
+    background-color: var(--color-stone-0);
+    border: 1px solid var(--color-stone-3);
+    border-radius: var(--radius-pill);
+    font-size: 0.8125rem;
+    text-decoration: none;
+    color: var(--color-ink-700);
+  }
+
+  .info__districts a:hover {
+    border-color: var(--color-ink-900);
+    color: var(--color-ink-900);
+  }
+
+  .prep {
+    display: grid;
+    gap: clamp(1.75rem, 4vw, 3rem);
+    align-items: start;
+  }
+
+  @media (min-width: 900px) {
+    .prep {
+      grid-template-columns: minmax(0, 22rem) 1fr;
+    }
+  }
+
+  .prep__title {
+    margin-block-start: 0.9rem;
+    font-size: var(--text-h2);
+    line-height: var(--text-h2--line-height);
+    letter-spacing: var(--text-h2--letter-spacing);
+  }
+
+  .prep__lead {
+    margin-block-start: 1rem;
+    color: var(--color-ink-600);
+    max-inline-size: 34ch;
+  }
+
+  .prep__list {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+    border-block-start: 1px solid var(--color-stone-3);
+  }
+
+  .prep__list li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.25rem;
+    align-items: baseline;
+    padding-block: 1.05rem;
+    border-block-end: 1px solid var(--color-stone-3);
+    font-size: var(--text-lead);
+    color: var(--color-ink-900);
+  }
+
+  .prep__num {
+    color: var(--color-amber-600);
+  }
+
+  .emergency {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1.25rem;
+    max-inline-size: 56rem;
+  }
+
+  .emergency__icon {
+    color: var(--color-amber-500);
+  }
+
+  .emergency__title {
+    font-size: var(--text-h3);
+    line-height: 1.2;
+  }
+
+  .emergency__text {
+    margin-block: 0.75rem 1rem;
+    color: var(--color-ink-fg-muted);
+    line-height: 1.65;
+  }
+</style>

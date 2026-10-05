@@ -113,7 +113,9 @@ Bu blok müşteri/kullanıcı onayıyla kilitlendi. Değişiklik ancak açık ta
 - [x] Cloudflare Pages projesi + direct-upload deploy (`npm run deploy`)
 - [x] `toroslar.digitalpedi.com` custom domain Pages projesine eklendi
 - [ ] **DNS CNAME kaydı** — `toroslar` → `toroslar-arac-kurtarma.pages.dev` (wrangler token'ında `dns_records:edit` yok, panelden eklenecek)
-- [ ] Gerçek domain bağlanınca canonical güncelle — **müşteri domaini beklemede**
+- [x] Canonical `toroslararackurtarma.com` + indexable + deploy
+- [ ] `toroslararackurtarma.com` + `www` custom domain Pages'e bağlanacak (panel)
+- [ ] Search Console + sitemap, 301 kuralları, Google Ads
 
 ---
 
@@ -166,3 +168,28 @@ aktifleşince tekrarlanmalı.
 2. Müşteri onayı gelirse `indexable: true` yap, `X-Robots-Tag` satırını sil,
    `npm run deploy`.
 3. Gerçek domain gelirse `docs/DEPLOY.md` içindeki 4 adımlık listeyi uygula.
+
+### 2026-10-05 — Gerçek domain: toroslararackurtarma.com
+
+**Yapıldı**
+Canonical dört yerde `https://toroslararackurtarma.com` yapıldı (astro.config,
+site.ts, robots.txt, llms.txt). `indexable: true`, `_headers` içinden
+`X-Robots-Tag: noindex` silindi. Derleme temiz, `npm run deploy` ile Pages'e
+yüklendi (deployment `1bbc6a13`). Cloudflare zone'u aktif (NS: duke / journey).
+
+**Doğrulama**
+`dist/` içinde noindex yalnız 404'te; canonical yeni domaine işaret ediyor.
+Canlı QA yapılmadı — domain henüz Pages projesine bağlı değil.
+
+**Yarım kalan / kilitli**
+- **Custom domain bağlama** — Pages → Custom domains → `toroslararackurtarma.com`
+  ve `www.toroslararackurtarma.com`. Oturumda DNS/domain değişikliği izni
+  reddedildi; panelden eklenecek.
+- `www` → apex ve `toroslar.digitalpedi.com` → yeni domain 301 kuralları.
+- Search Console mülkü + `sitemap-index.xml` gönderimi.
+- Google Ads kurulumu ve bağlantısı.
+
+**Sıradaki session'ın ilk işi**
+1. Domain bağlanınca `npm run qa https://toroslararackurtarma.com`.
+2. Search Console (Domain mülkü, Cloudflare ile otomatik DNS doğrulama) + sitemap.
+3. 301 kuralları, ardından Ads.

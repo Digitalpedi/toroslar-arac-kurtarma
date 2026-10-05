@@ -26,7 +26,7 @@ export const site = {
   plateCode: '33',
 
   /** Canonical domain — müşteri domainine geçişte astro.config.mjs ile birlikte güncellenir */
-  url: 'https://toroslar.digitalpedi.com',
+  url: 'https://toroslararackurtarma.com',
 
   /**
    * ARAMA MOTORU İNDEKSLEMESİ
@@ -41,7 +41,7 @@ export const site = {
    *   2. `public/_headers` içindeki `X-Robots-Tag: noindex` satırını sil
    *   3. `astro.config.mjs` ve yukarıdaki `url` değerini yeni domaine çevir
    */
-  indexable: false,
+  indexable: true,
 
   /**
    * Fiziksel adres YOK — mobil hizmet işletmesi.

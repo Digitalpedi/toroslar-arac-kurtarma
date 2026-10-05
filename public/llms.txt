@@ -9,7 +9,7 @@
 - **Çalışma saatleri:** 7/24 kesintisiz (gece, hafta sonu, resmî tatil dâhil)
 - **Hizmet bölgesi:** Yalnızca Mersin şehir içi — Toroslar, Yenişehir, Mezitli, Akdeniz
 - **Fiziksel adres:** Yok. Mobil hizmet işletmesidir; buluşma noktası aracın bulunduğu yerdir.
-- **Web:** https://toroslar.digitalpedi.com
+- **Web:** https://toroslararackurtarma.com
 
 ## Yapılan işler
 
@@ -32,29 +32,29 @@
 ## Sayfalar
 
 ### Hizmetler
-- [Hizmetler](https://toroslar.digitalpedi.com/hizmetler/): Altı hizmetin listesi, kapsam ve kapsam dışı ayrımı
-- [Oto Çekici](https://toroslar.digitalpedi.com/hizmetler/oto-cekici/): Binek araç çekici; kayar kasa yönteminin gerekçesi
-- [Hafif Ticari Araç Kurtarma](https://toroslar.digitalpedi.com/hizmetler/hafif-ticari-arac-kurtarma/): Panelvan, kamyonet, minibüs; yüklü araçta izlenen yol
-- [Kaza Sonrası Araç Kurtarma](https://toroslar.digitalpedi.com/hizmetler/kaza-sonrasi-arac-kurtarma/): Kaza yerinde ilk adımlar, tutanak, kurtarma sırası
-- [Arızalı Araç Taşıma](https://toroslar.digitalpedi.com/hizmetler/arizali-arac-tasima/): Aracı derhâl durdurmayı gerektiren belirtiler
-- [Kapalı Otopark ve Dar Alan Kurtarma](https://toroslar.digitalpedi.com/hizmetler/kapali-otopark-kurtarma/): Kaydırma takozu, halat-makara, rampa güvenliği
-- [Şehir İçi Araç Nakli](https://toroslar.digitalpedi.com/hizmetler/sehir-ici-arac-nakli/): Çalışan aracın planlı taşınması
+- [Hizmetler](https://toroslararackurtarma.com/hizmetler/): Altı hizmetin listesi, kapsam ve kapsam dışı ayrımı
+- [Oto Çekici](https://toroslararackurtarma.com/hizmetler/oto-cekici/): Binek araç çekici; kayar kasa yönteminin gerekçesi
+- [Hafif Ticari Araç Kurtarma](https://toroslararackurtarma.com/hizmetler/hafif-ticari-arac-kurtarma/): Panelvan, kamyonet, minibüs; yüklü araçta izlenen yol
+- [Kaza Sonrası Araç Kurtarma](https://toroslararackurtarma.com/hizmetler/kaza-sonrasi-arac-kurtarma/): Kaza yerinde ilk adımlar, tutanak, kurtarma sırası
+- [Arızalı Araç Taşıma](https://toroslararackurtarma.com/hizmetler/arizali-arac-tasima/): Aracı derhâl durdurmayı gerektiren belirtiler
+- [Kapalı Otopark ve Dar Alan Kurtarma](https://toroslararackurtarma.com/hizmetler/kapali-otopark-kurtarma/): Kaydırma takozu, halat-makara, rampa güvenliği
+- [Şehir İçi Araç Nakli](https://toroslararackurtarma.com/hizmetler/sehir-ici-arac-nakli/): Çalışan aracın planlı taşınması
 
 ### Bölgeler
-- [Bölgeler](https://toroslar.digitalpedi.com/bolgeler/)
-- [Toroslar Çekici](https://toroslar.digitalpedi.com/bolgeler/toroslar-cekici/): Halkkent, Yalınayak, Osmaniye, Güneş, Çukurova
-- [Yenişehir Çekici](https://toroslar.digitalpedi.com/bolgeler/yenisehir-cekici/): Palmiye, Barbaros, Menteş, Çiftlikköy, Limonluk
-- [Mezitli Çekici](https://toroslar.digitalpedi.com/bolgeler/mezitli-cekici/): Viranşehir, Davultepe, Tece, Soli
-- [Akdeniz Çekici](https://toroslar.digitalpedi.com/bolgeler/akdeniz-cekici/): Çamlıbel, Kiremithane, Mesudiye, Nusratiye
+- [Bölgeler](https://toroslararackurtarma.com/bolgeler/)
+- [Toroslar Çekici](https://toroslararackurtarma.com/bolgeler/toroslar-cekici/): Halkkent, Yalınayak, Osmaniye, Güneş, Çukurova
+- [Yenişehir Çekici](https://toroslararackurtarma.com/bolgeler/yenisehir-cekici/): Palmiye, Barbaros, Menteş, Çiftlikköy, Limonluk
+- [Mezitli Çekici](https://toroslararackurtarma.com/bolgeler/mezitli-cekici/): Viranşehir, Davultepe, Tece, Soli
+- [Akdeniz Çekici](https://toroslararackurtarma.com/bolgeler/akdeniz-cekici/): Çamlıbel, Kiremithane, Mesudiye, Nusratiye
 
 ### Kurumsal
-- [Kurumsal](https://toroslar.digitalpedi.com/kurumsal/): Çalışma ilkeleri ve künye
-- [Nasıl Çalışır](https://toroslar.digitalpedi.com/surec/): Çağrıdan teslimata beş adım
-- [Sıkça Sorulan Sorular](https://toroslar.digitalpedi.com/sss/)
-- [İletişim](https://toroslar.digitalpedi.com/iletisim/)
+- [Kurumsal](https://toroslararackurtarma.com/kurumsal/): Çalışma ilkeleri ve künye
+- [Nasıl Çalışır](https://toroslararackurtarma.com/surec/): Çağrıdan teslimata beş adım
+- [Sıkça Sorulan Sorular](https://toroslararackurtarma.com/sss/)
+- [İletişim](https://toroslararackurtarma.com/iletisim/)
 
 ### Rehber
-- [Rehber](https://toroslar.digitalpedi.com/rehber/): Yolda kalma, çekici ve araç kurtarma bilgileri
+- [Rehber](https://toroslararackurtarma.com/rehber/): Yolda kalma, çekici ve araç kurtarma bilgileri
 
 ## Sık sorulanların kısa cevapları
 

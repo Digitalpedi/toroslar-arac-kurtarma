@@ -7,7 +7,7 @@ import { rehypeTrSlug } from './scripts/rehype-tr-slug.mjs';
 // NOT: `site` canonical/OG/sitemap mutlak URL'lerinin tek kaynağıdır.
 // Müşteri kendi domainine geçtiğinde SADECE burası ve src/data/site.ts güncellenir.
 export default defineConfig({
-  site: 'https://toroslar.digitalpedi.com',
+  site: 'https://toroslararackurtarma.com',
   output: 'static',
   trailingSlash: 'always',
   build: {

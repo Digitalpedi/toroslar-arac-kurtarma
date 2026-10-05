@@ -3,7 +3,7 @@
 Mersin şehir içi oto çekici ve araç kurtarma sitesi.
 Astro (static) · Tailwind CSS v4 · TypeScript strict · GSAP/ScrollTrigger.
 
-**Canlı:** https://toroslar.digitalpedi.com
+**Canlı:** https://toroslararackurtarma.com
 
 ---
 
